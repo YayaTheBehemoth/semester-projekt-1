@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <script src="scripts/d3.js"></script>
+  <title>Danmarks klimamål</title>
+</head>
+
+<body>
+  <h1>Danmarks udledning igennem tiden</h1>
+  <select id="dropdown"></select>
+  <script>
+  // Denne query kører op imod API'en som findes i 'main.js'.
+  // Denne HTML skal derfor åbnes igennem serveren for at virke.
+  d3.json("/api/helloQuery", {
+    method: "POST", 
+  }).then(function(response) {
+    const w = 500;
+    const h = 350;
+    const margin = 20; 
+    const data = response.data; // Hent data ud af response
+    let columns = ["Landbrug","Energi","industi og ervherv","transport","landbrug","husholdning", "Samlet udledning"]
+    console.log("data", data);
+         //lav dropdown menu ud fra html elemen
+d3.select("#dropdown")
+    .selectAll('myOptions')
+    .data(columns)
+    .enter()
+    .append('option')
+    .text(function(d){return d})
+    .attr("value",function(d){return d})
+d3.selectAll("body")
+.append("svg")
+.attr("height", h)
+.attr("width",w)
+  });
+  
+  </script>
+</body>
+</html>
