@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <script src="scripts/d3.js"></script>
+  <script src="d3.js"></script>
   <title>Danmarks klimamål</title>
 </head>
 
@@ -20,7 +20,7 @@
     const h = 350;
     const margin = 20; 
     const data = response.data; // Hent data ud af response
-    let columns = ["Landbrug","Energi","industi og ervherv","transport","landbrug","husholdning", "Samlet udledning"]
+    let columns = ["Landbrug","Energi","industi og ervherv","transport","husholdning", "Samlet udledning"]
     console.log("data", data);
          //lav dropdown menu ud fra html elemen
 d3.select("#dropdown")
