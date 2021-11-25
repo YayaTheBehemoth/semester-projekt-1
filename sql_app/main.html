@@ -1,0 +1,247 @@
+
+<html>
+
+<head>
+  <link rel="stylesheet" href="test.css">
+  <title>:)</title>
+  <script type="text/javascript" src="d3.js"></script>
+  
+</head>
+<!--The 2 divs are created to structure the dom elements-->
+
+  <h1>Html input i d3 -fuck mig edition</h1>
+<div class="dumpster">
+<div class="sliders">
+ <!--
+   the different p elements are essentially just wrappers for the sliders and their labels
+   each p element corresponds to one slider
+-->
+  <p class="p1" > 
+    <label for="cText1" 
+           style="display: inline-block; width: 240px; text-align:match-present;top: 100px; left: 100px;  ">
+           Udledning fra pis = <span id="cText1-value">..</span>
+    </label>
+    <input type="range" min="1" max="150" id="cText1" >
+  </p>
+
+  <p class="p2"> 
+    <label for="cText2" 
+           style="display: inline-block; width: 240px; text-align:match-present;top: 100px; left: 100px;  ">
+           Udledning fra pis = <span id="cText2-value">..</span>
+    </label>
+    <input type="range" min="1" max="150" id="cText2" >
+  </p>
+
+  <p class="p3"> 
+    <label for="cText3" 
+           style="display: inline-block; width: 240px; text-align:match-present;top: 100px; left: 100px;  ">
+           Udledning fra pis = <span id="cText3-value">..</span>
+    </label>
+    <input type="range" min="1" max="150" id="cText3" >
+  </p>
+
+  <p class="p4"> 
+    <label for="cText4" 
+           style="display: inline-block; width: 240px; text-align:match-present;top: 100px; left: 100px;  ">
+           Udledning fra pis = <span id="cText4-value">..</span>
+    </label>
+    <input type="range" min="1" max="150" id="cText4" >
+  </p>
+</div>
+<button id="resultbut">Click me!</button>
+<div id ="resultModal" class="modal">
+ <div class="modal-text">
+   <span class="close">&times;</span>
+   <p>Den samlede udledning er <span id="rText"></span> </p>
+ </div>
+</div>
+  <script type="text/javascript">
+    //variable and/or constant dumpster 
+  
+     const w = 850;
+    const h = 850;
+    const margin = 20; 
+  
+ //updates the value of the input which is then passed on as the radius of the circle
+  function update1(cText1){
+    d3.select("#cText1-value")
+    .text(cText1);
+  d3.select("#cText1").property("value", cText1);
+    svg.select("#c1") 
+    .attr("r", cText1);    
+  }
+  function update2(cText2){
+    d3.select("#cText2-value").text(cText2);
+  d3.select("#cText2").property("value", cText2);
+  svg.select("#c2") 
+    .attr("r", cText2)
+ }
+ function update3(cText3){
+    d3.select("#cText3-value").text(cText3);
+  d3.select("#cText3").property("value", cText3);
+  svg.select("#c3") 
+    .attr("r", cText3)
+ }
+ function update4(cText4){
+    d3.select("#cText4-value").text(cText4);
+  d3.select("#cText4")
+  
+  .property("value", cText4);
+  svg.select("#c4") 
+    .attr("r", cText4)
+ }
+ //updates the text for the labels on the sliders 
+
+ d3.select("#cText1").on("input",function(){
+    update1(+cText1.value)
+                    
+  })
+
+  d3.select("#cText2").on("input",function(){
+    update2(+cText2.value)
+                    
+  })
+  d3.select("#cText3").on("input",function(){
+    update3(+cText3.value)
+                    
+  })
+  d3.select("#cText4").on("input",function(){
+    update4(+cText4.value)
+                    
+  })
+  //create svg
+    const svg = d3.select("body")
+      .append("svg")
+      .attr("width", w)
+      .attr("height", h);
+
+ //append circles   
+svg.append("circle")
+  .attr("id","c1")
+  .attr("cx", 160)
+  .attr("cy", 200) 
+  .style("fill", "none")   
+  .style("stroke", "blue") 
+  .attr("r", 120);
+
+  svg.append("circle")
+  .attr("id","c2")
+  .attr("cx", 500)
+  .attr("cy", 200) 
+  .style("fill", "none")   
+  .style("stroke", "blue") 
+  .attr("r", 120);
+
+  svg.append("circle")
+  .attr("id","c3")
+  .attr("cx", 160)
+  .attr("cy", 600) 
+  .style("fill", "none")   
+  .style("stroke", "blue") 
+  .attr("r", 120);
+
+  svg.append("circle")
+  .attr("id","c4")
+  .attr("cx", 500)
+  .attr("cy", 600) 
+  .style("fill", "none")   
+  .style("stroke", "blue") 
+  .attr("r", 120);
+
+  var modal = document.getElementById("resultModal");
+  var btn = document.getElementById("resultbut");
+  var span = document.getElementsByClassName("close")[0];
+
+  btn.onclick = function() {
+    d3.select("#resultmodal")
+    .select("svg")
+    .remove()
+
+  modal.style.display = "block";
+
+  let result = parseInt(cText1.value) + parseInt(cText2.value) + parseInt(cText3.value) + parseInt(cText4.value)
+  document.getElementById("rText").innerHTML = result
+  
+
+
+  d3.select(".modal-text").append("svg") 
+  .attr("id","modalSvg")
+ .attr("height",500)
+ .attr("width",950)
+ 
+  .append("g")
+
+ let modalGroup= d3.select("g")
+ modalGroup.append("text")
+
+ .text("world is kill")
+ .attr("x",25)
+ .attr("y",25)
+
+
+}
+span.onclick = function() {
+  modal.style.display = "none";
+ 
+
+}
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+/*
+//create group element which will act as a wrapper for the button elements
+svg.append("g")
+const button = svg.selectAll("g")
+//append 'button'
+button.append("rect")
+.attr("x", 280)
+.attr("y",340)
+.attr("height",30)
+.attr("width",100)
+.attr("stroke","black")
+.attr("fill","white")
+//append text
+button.append("text")
+.text("click me!")
+.attr("x", 300)
+.attr("y",360)
+//event listener for the button 
+//highlights the button when cursor hovers over it
+d3.selectAll("g")
+.on("mouseover",function(){
+  d3.selectAll("rect")
+  .style("fill","pink")
+})
+//removes button highlight on mouseout
+d3.selectAll("g")
+.on("mouseout",function(){
+  d3.selectAll("rect")
+  .style("fill","white")
+})
+//function tied to button press
+.on("click", function(){
+  d3.selectAll("#buttonText")
+  .remove()
+  let result = parseInt(cText1.value) + parseInt(cText2.value) + parseInt(cText3.value) + parseInt(cText4.value)
+    svg.append("text") 
+    .attr("id", "buttonText")
+    .text(function(){
+      return `den samlede udledning er ${result}!`
+    })
+    .attr("x",600)
+    .attr("y",360)
+    d3.select("body")
+      .append("svg")
+      .attr("width", w)
+      .attr("height", h);
+  })
+*/
+  </script>
+   
+  </div>
+  
+</body>
+
+</html>
