@@ -63,7 +63,7 @@ app.use(morgan("combined"));
  * Man laver lige så mange endpoints man har lyst til. Jeg har lavet et enkelt til
  * querien `SELECT 'Hello, World' as message`.
  */
-app.post("/test", async (req, res) => {
+app.post("/", async (req, res) => {
   try {
     // Lav query
     const query = "select * from test_table"
