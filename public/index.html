@@ -81,7 +81,7 @@ svg.append("g")
 
 svg.append("g1")
 .append("path")
-
+.data(data)
 .attr("d", d3.line()
 .x(data, function(d){ return x(d.nettoudledning) })
 .y(data, function(d) { return y(d.landbrug ) })
