@@ -72,6 +72,16 @@ d3.selectAll("svg")
 .append("g")
 .attr("transform", "translate(20,0)")
       .call(d3.axisLeft(yAxis))
+d3.selectAll("svg")
+.append("g")
+.append("path")
+.data(data)
+.attr("d", d3.line()
+.x(function(d){return d.dato})
+.y(function(d) {return d.landbrug})
+)
+.attr("stroke","pink")
+.attr("stroke-width", 4)
 
   });
   
