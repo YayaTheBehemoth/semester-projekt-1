@@ -39,6 +39,7 @@
     const margin = 20; 
     const data = response.data; // Hent data ud af response
     let columns = ["Landbrug","Energi","industi og ervherv","transport","husholdning", "Samlet udledning"]
+   
     console.log("data", data);
    //defining scales, used later for when we want to add axes 
    let xAxis = d3.scaleLinear()
@@ -64,24 +65,25 @@
 //place svg inside the div called side
 d3.selectAll(".side")
 .append("svg")
+let svg = d3.selectAll("svg")
 .attr("height", h)
 .attr("width",w)
-d3.selectAll("svg")
-.append("g")
+
+svg.append("g")
 .attr("transform", "translate(0," + (h-margin) + ")")
 .call(d3.axisBottom(xAxis));
-d3.selectAll("svg")
-.append("g")
+
+svg.append("g")
 .attr("transform", "translate(20,0)")
       .call(d3.axisLeft(yAxis))
 
 //creates the line for the graph
-d3.selectAll("svg")
-.append("path")
+
+svg.append("path")
 .data(data)
 .attr("d", d3.line()
-.x(function(d){return x(d.dato)})
-.y(function(d) {return y(d.landbrug)})
+.x(function(d){ return x(d.dato) })
+.y(function(d) { return y(d.landbrug ) })
 )
 .attr("stroke","pink")
 .attr("stroke-width", 4)
