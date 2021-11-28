@@ -77,10 +77,9 @@ d3.selectAll("svg")
 
 //creates the line for the graph
 d3.selectAll("svg")
-.append("g")
 .append("path")
 .data(data)
-.attr("d", line()
+.attr("d", d3.line()
 .x(function(d){return x(+d.dato)})
 .y(function(d) {return y(+d.landbrug)})
 )
