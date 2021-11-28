@@ -27,7 +27,7 @@
     
       <div class="main">
       <h2>Visualisering</h2></div>
-  <select id="dropdown"></select>
+ 
   <script>
   // Denne query kører op imod API'en som findes i 'main.js'.
   // Denne HTML skal derfor åbnes igennem serveren for at virke.
@@ -48,7 +48,7 @@
     .append('option')
     .text(function(d){return d})
     .attr("value",function(d){return d})
-d3.selectAll("body")
+d3.selectAll(".side")
 .append("svg")
 .attr("height", h)
 .attr("width",w)
