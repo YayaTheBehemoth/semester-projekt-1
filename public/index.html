@@ -58,6 +58,7 @@ d3.selectAll(".side")
 .append("svg")
 .attr("height", h)
 .attr("width",w)
+d3.selectAll("svg")
 svg.append("g")
       .attr("transform", "translate(0," + h + ")")
       .call(d3.axisBottom(xAxis));
