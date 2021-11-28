@@ -66,9 +66,10 @@ d3.selectAll(".side")
 .attr("width",w)
 d3.selectAll("svg")
 .append("g")
-      .call(d3.axisLeft(yAxis))
+      
       .attr("transform", "translate(0," + h + ")")
-      .call(d3.axisBottom(xAxis));
+      .call(d3.axisBottom(xAxis))
+      .call(d3.axisLeft(yAxis))
 
   });
   
