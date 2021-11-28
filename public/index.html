@@ -46,6 +46,12 @@
                 d3.max(data, function (d){return d.dato;})
               ])
               .range([margin, w-margin ])
+    let yAxis = d3.scaleLinear()
+              .domain([
+                d3.min(data, function (d){return d.landbrug;}),
+                d3.max(data, function (d){return d.landbrug;})
+              ])
+              .range([margin, h-margin ])
          //lav dropdown menu ud fra html element
   d3.select("#dropdown")
     .selectAll('myOptions')
@@ -60,6 +66,7 @@ d3.selectAll(".side")
 .attr("width",w)
 d3.selectAll("svg")
 .append("g")
+      .call(d3.axisLeft(y))
       .attr("transform", "translate(0," + h + ")")
       .call(d3.axisBottom(xAxis));
 
