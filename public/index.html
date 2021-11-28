@@ -80,13 +80,14 @@ d3.selectAll("svg")
 .append("g")
 .append("path")
 .data(data)
+.enter()
 .attr("d", d3.line()
 .x(function(d){return x(+d.dato)})
 .y(function(d) {return y(+d.landbrug)})
 )
 .attr("stroke","pink")
 .attr("stroke-width", 4)
-
+.attr("fill","none")
   });
   
   </script>
