@@ -70,6 +70,7 @@ d3.selectAll("svg")
 .call(d3.axisBottom(xAxis));
 d3.selectAll("svg")
 .append("g")
+.attr("transform", "translate(20,0)")
       .call(d3.axisLeft(yAxis))
 
   });
