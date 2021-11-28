@@ -54,8 +54,8 @@
     const data = response.data; // Hent data ud af response
     let columns = ["Landbrug","Energi","industi og ervherv","transport","husholdning", "Samlet udledning"]
     console.log("data", data);
-         //lav dropdown menu ud fra html elemen
-  d3.select("#fakeimg")
+         //lav dropdown menu ud fra html element
+  d3.select(".side")
     .append("#dropdown")
     .selectAll('myOptions')
     .data(columns)
