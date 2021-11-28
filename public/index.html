@@ -21,7 +21,7 @@
   
   <div class="row">
     <div class="side">
-      <h2>Historisk overblik over danmarks</h2> 
+      <h2>Historisk overblik over danmarks udledning</h2> 
       <select id="dropdown"></select>
     </div>
     
@@ -40,6 +40,7 @@
     const data = response.data; // Hent data ud af response
     let columns = ["Landbrug","Energi","industi og ervherv","transport","husholdning", "Samlet udledning"]
     console.log("data", data);
+
          //lav dropdown menu ud fra html element
   d3.select("#dropdown")
     .selectAll('myOptions')
@@ -52,6 +53,16 @@ d3.selectAll(".side")
 .append("svg")
 .attr("height", h)
 .attr("width",w)
+let xAxis = d3.scaleLinear()
+              .domain([
+                d3.min(data, function (d){return d.dato;}),
+                d3.max(data, function (d){return d.dato;})
+              ])
+              .range([margin, w-margin ])
+              svg.append("g")
+      .attr("transform", "translate(0," + h + ")")
+      .call(d3.axisBottom(xAxis));
+
   });
   
   </script>
