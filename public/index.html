@@ -40,7 +40,8 @@
     const data = response.data; // Hent data ud af response
     let columns = ["Landbrug","Energi","industi og ervherv","transport","husholdning", "Samlet udledning"]
     console.log("data", data);
-    let xAxis = d3.scaleLinear()
+   //defining scales, used later for when we want to add axes 
+   let xAxis = d3.scaleLinear()
               .domain([
                 d3.min(data, function (d){return d.dato;}),
                 d3.max(data, function (d){return d.dato;})
@@ -60,6 +61,7 @@
     .append('option')
     .text(function(d){return d})
     .attr("value",function(d){return d})
+//place svg inside the div called side
 d3.selectAll(".side")
 .append("svg")
 .attr("height", h)
@@ -72,13 +74,15 @@ d3.selectAll("svg")
 .append("g")
 .attr("transform", "translate(20,0)")
       .call(d3.axisLeft(yAxis))
+
+//creates the line for the graph
 d3.selectAll("svg")
 .append("g")
 .append("path")
 .data(data)
 .attr("d", d3.line()
-.x(function(d){return d.dato})
-.y(function(d) {return d.landbrug})
+.x(function(d){return x(+d.dato)})
+.y(function(d) {return y(+d.landbrug)})
 )
 .attr("stroke","pink")
 .attr("stroke-width", 4)
