@@ -55,7 +55,8 @@
     let columns = ["Landbrug","Energi","industi og ervherv","transport","husholdning", "Samlet udledning"]
     console.log("data", data);
          //lav dropdown menu ud fra html elemen
-d3.select("#dropdown")
+  d3.select("#fakeimg")
+    .append("#dropdown")
     .selectAll('myOptions')
     .data(columns)
     .enter()
