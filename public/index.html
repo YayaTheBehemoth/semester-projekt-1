@@ -15,7 +15,7 @@
   
   <div class="navbar">
     <a href="#" class="active">Oversigt</a>
-    <a href="#">Klimaberegneren</a>
+    <a href="mainTest.html">Klimaberegneren</a>
     <a href="#">Placeholder</a>
    </div>
   
@@ -83,8 +83,8 @@ svg
 .append("path")
 .data(data)
 .attr("d", d3.line()
-.x(function(d){ return x(d.nettoudledning) })
-.y( function(d) { return y(d.landbrug ) })
+.x(function(d){ return (d.dato) })
+.y( function(d) { return (d.landbrug ) })
 )
 .attr("stroke","pink")
 .attr("stroke-width", 4)
