@@ -40,20 +40,33 @@
     const data = response.data; // Hent data ud af response
     let columns = ["Landbrug","Energi","industi og ervherv","transport","husholdning", "Samlet udledning"]
    
+    let timeParse =  d3.utcParse("%Y-%m-%dT%H:%M:%S.%LZ")
     console.log("data", data);
+  
+  /*
+      for (let i = 0; i < data.length; i++){
+         console.log((dateParse(data[i].dato)))
+      }
+   */ 
    //defining scales, used later for when we want to add axes 
-   let xAxis = d3.scaleLinear()
-              .domain([
-                d3.min(data, function (d){return d.dato;}),
-                d3.max(data, function (d){return d.dato;})
+
+   let xScale = d3.scaleTime()
+              .domain([ 
+                d3.min(data, function (d){return timeParse(d.dato);}),
+                d3.max(data, function (d){return timeParse(d.dato);})
               ])
               .range([margin, w-margin ])
-    let yAxis = d3.scaleLinear()
+    let yScale = d3.scaleLinear()
               .domain([
-                d3.min(data, function (d){return d.landbrug;}),
-                d3.max(data, function (d){return d.landbrug;})
+                d3.min(data, function (d){return (d.nettoudledning);}),
+                d3.max(data, function (d){return (d.nettoudledning);})
               ])
               .range([margin, h-margin ])
+  //defines axes 
+  let xAxis = d3.axisBottom()
+                .scale(xScale)
+  let yAxis = d3.axisLeft()
+                .scale(yScale)
          //lav dropdown menu ud fra html element
   d3.select("#dropdown")
     .selectAll('myOptions')
@@ -71,24 +84,29 @@ let svg = d3.selectAll("svg")
 
 svg.append("g")
 .attr("transform", "translate(0," + (h-margin) + ")")
-.call(d3.axisBottom(xAxis));
+.call(xAxis)
+
 
 svg.append("g")
+
 .attr("transform", "translate(20,0)")
-      .call(d3.axisLeft(yAxis))
+
+      .call(yAxis)
+ 
 
 //creates the line for the graph
-//wetwetwetwetwet
+
 svg
+.append("g")
 .append("path")
 .data(data)
-.attr("d", d3.line()
-.x(function(d){ return (d.dato) })
-.y( function(d) { return (d.landbrug ) })
+.attr("d",  d3.svg.line()
+.x(function(d){ return xScale(timeParse(+d.dato)) })
+.y(function(d) { return yScale(+d.nettoudledning ) })
 )
 .attr("stroke","pink")
 .attr("stroke-width", 4)
-.attr("fill","none")
+.attr("fill","black")
   });
   //test comment 
   </script>
