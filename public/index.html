@@ -22,7 +22,14 @@
   <div class="row">
     <div class="side">
       <h2>Historisk overblik over danmarks udledning</h2> 
-      <select id="dropdown"></select>
+      <select id="dropdown">
+      <option value="Transport">Transport</option>
+      <option value="Landbrug">Landbrug</option>
+      <option value="Industri og ervherv">Industri og ervherv</option>
+      <option value="Energi">Transport</option>
+      <option value="Husholdning">Husholdning</option>
+      <option value="Samlet udledning" selected="selected">Samlet udledning</option>
+      </select>
     </div>
     
       <div class="main">
@@ -38,12 +45,18 @@
     const h = 350;
     const margin = 20; 
     const data = response.data; // Hent data ud af response
-    let columns = ["Landbrug","Energi","industi og ervherv","transport","husholdning", "Samlet udledning"]
-   
-    let timeParse =  d3.utcParse("%Y-%m-%dT%H:%M:%S.%LZ")
+    /*
+    let columns = ["Samlet udledning","Landbrug","Energi","industi og ervherv","transport","husholdning"] // options for the dropdown button 
+   */
+   const timeParse =  d3.utcParse("%Y-%m-%dT%H:%M:%S.%LZ")
     console.log("data", data);
-  
-  /*
+    var key = d3.map(data, function(d){return d3.utcParse("%Y-%m-%dT%H:%M:%S.%LZ")(d.dato)}).keys()
+    d3.selectAll(".side")
+.append("svg")
+let svg = d3.selectAll("svg")
+.attr("height", h)
+.attr("width",w)
+  /* log statement to troubleshoot issues in relation to fetching the correct rows from "data" [FIXED]
       for (let i = 0; i < data.length; i++){
          console.log((dateParse(data[i].dato)))
       }
@@ -52,22 +65,37 @@
 
    let xScale = d3.scaleTime()
               .domain([ 
-                d3.min(data, function (d){return timeParse(d.dato);}),
-                d3.max(data, function (d){return timeParse(d.dato);})
+                d3.min(data, function (d){return d3.utcParse("%Y-%m-%dT%H:%M:%S.%LZ")(d.dato);}),
+                d3.max(data, function (d){return d3.utcParse("%Y-%m-%dT%H:%M:%S.%LZ")(d.dato);})
               ])
               .range([margin, w-margin ])
     let yScale = d3.scaleLinear()
               .domain([
-                d3.min(data, function (d){return (d.nettoudledning);}),
+                d3.min(data,function (d){return (d.nettoudledning);}),
                 d3.max(data, function (d){return (d.nettoudledning);})
               ])
-              .range([margin, h-margin ])
+              .range([h-margin, margin ])
   //defines axes 
-  let xAxis = d3.axisBottom()
+  let xAxis = 
+  svg.append("g")
+
+.attr("transform", "translate(0," + (h-margin) + ")")
+.call(
+  d3.axisBottom()
                 .scale(xScale)
-  let yAxis = d3.axisLeft()
+)
+  let yAxis = 
+svg.append("g")
+
+.attr("transform", "translate(20,0)")
+.attr("id","yAxis")
+      .call(
+  
+                d3.axisLeft()
                 .scale(yScale)
+      )
          //lav dropdown menu ud fra html element
+         /*
   d3.select("#dropdown")
     .selectAll('myOptions')
     .data(columns)
@@ -75,14 +103,12 @@
     .append('option')
     .text(function(d){return d})
     .attr("value",function(d){return d})
+    */
 //place svg inside the div called side
-d3.selectAll(".side")
-.append("svg")
-let svg = d3.selectAll("svg")
-.attr("height", h)
-.attr("width",w)
 
+/*
 svg.append("g")
+
 .attr("transform", "translate(0," + (h-margin) + ")")
 .call(xAxis)
 
@@ -90,25 +116,165 @@ svg.append("g")
 svg.append("g")
 
 .attr("transform", "translate(20,0)")
-
+.attr("id","yAxis")
       .call(yAxis)
- 
-
-//creates the line for the graph
-
-svg
+      */
+/* scatterplot made to troubleshoot issues in relation to creating the linegraph [FIXED]
+svg.append("g")
+.selectAll("dot")
+.data(data)
+.enter()
+.append("circle")
+.attr("cx", function(d){ return xScale(d3.utcParse("%Y-%m-%dT%H:%M:%S.%LZ")(d.dato))})
+.attr("cy", function(d){ return yScale(d.nettoudledning)})
+.attr("r",5)
+.attr("fill","Black")
+*/
+//creates the line for the graph and initializes it at the value "nettoudledning"
+const line = svg
 .append("g")
 .append("path")
-.data(data)
-.attr("d",  d3.svg.line()
-.x(function(d){ return xScale(timeParse(+d.dato)) })
-.y(function(d) { return yScale(+d.nettoudledning ) })
-)
+.datum(data)
 .attr("stroke","pink")
 .attr("stroke-width", 4)
-.attr("fill","black")
-  });
-  //test comment 
+.attr("fill","none")
+.attr("d", d3.line()
+.x(function(d){ return xScale(d3.utcParse("%Y-%m-%dT%H:%M:%S.%LZ")(d.dato))})
+.y(function(d) { return yScale(d.nettoudledning ) })
+)
+//function that updates the scale for the y-axis when a different option is chosen in the dropdown 
+function updateYscale (dataSelection) {
+  let selectedData = d3.selectAll("#dropdown").property("value")
+  yScale 
+              .domain([
+                d3.min(data,function (d){
+                  let i = d 
+                  if (selectedData == "Landbrug") {
+                    i = d.landbrug
+                  } else 
+                  if (selectedData == "Energi"){
+                    i = d.energi
+                  } else
+                  if (selectedData == "Industri og ervherv"){
+                    i = d.industi_og_ervherv
+                  } else 
+                  if (selectedData == "Transport"){
+                    i = d.transport
+                  } else 
+                  if (selectedData == "Husholdning"){
+                    i = d.husholdning
+                  } else 
+                  if (selectedData == "Samlet udledning"){
+                    i = d.nettoudledning
+                  }
+                 d = i
+                return d;}),
+                
+                d3.max(data, function (d){
+                  let i = d 
+                  if (selectedData == "Landbrug") {
+                    i = d.landbrug
+                  } else 
+                  if (selectedData == "Energi"){
+                    i = d.energi
+                  } else
+                  if (selectedData == "Industri og ervherv"){
+                    i = d.industi_og_ervherv
+                  } else 
+                  if (selectedData == "Transport"){
+                    i = d.transport
+                  } else 
+                  if (selectedData == "Husholdning"){
+                    i = d.husholdning
+                  } else 
+                  if (selectedData == "Samlet udledning"){
+                    i = d.nettoudledning
+                  }
+                 d = i
+                return d;})
+              ])
+           
+        yAxis.transition(1000)
+        .attr("transform", "translate(20,0)")
+        .call(d3.axisLeft(yScale))
+       
+        line 
+  .datum(data)
+  .transition(1000)
+  .attr("d", d3.line()
+  .x(function(d){ return xScale(d3.utcParse("%Y-%m-%dT%H:%M:%S.%LZ")(d.dato))})
+.y(function(d) { 
+  let i = d 
+  if (selectedData == "Landbrug") {
+    i = yScale(d.landbrug)
+  } else 
+  if (selectedData == "Transport"){
+    i = yScale(d.transport)
+  } else 
+  if (selectedData == "Samlet udledning"){
+    i = yScale(d.nettoudledning)
+  } else
+  if (selectedData == "Energi"){
+    i = yScale(d.energi)
+  } else
+  if (selectedData == "Industri og ervherv"){
+    i = yScale(d.industi_og_ervherv)
+  } else
+  if (selectedData == "Husholdning"){
+    i = yScale(d.husholdning)
+  }
+  d = i 
+  return d;
+  }))
+}
+// function that updates graph when a different option is chosen in the dropdown 
+function updateGraph (dataSelection) {
+  /*
+  let selectedData = d3.selectAll("#dropdown").property("value")
+  line 
+  .datum(data)
+  .transition(1000)
+  .attr("d", d3.line()
+  .x(function(d){ return xScale(d3.utcParse("%Y-%m-%dT%H:%M:%S.%LZ")(d.dato))})
+.y(function(d) { 
+  let i = d 
+  if (selectedData == "Landbrug") {
+    i = yScale(d.landbrug)
+  } else 
+  if (selectedData == "transport"){
+    i = yScale(d.transport)
+  } else 
+  if (selectedData == "Samlet udledning"){
+    i = yScale(d.nettoudledning)
+  } else
+  if (selectedData == "Energi"){
+    i = yScale(d.energi)
+  } else
+  if (selectedData == "industi og ervherv"){
+    i = yScale(d.industi_og_ervherv)
+  } else
+  if (selectedData == "husholdning"){
+    i = yScale(d.husholdning)
+  }
+  d = i 
+  return d;
+  }))
+*/
+}
+//binds an event listener to the button that calls the function to update the graph accordingly to the option chosen in the dropdown 
+d3.select("#dropdown").on("change", function(d){
+
+  let selectedGraph = (d3.select(this).property("value"))
+  
+  updateYscale(selectedGraph)
+  
+
+})
+
+
+    })
+
+  
   </script>
 </body>
 </html>
