@@ -2,14 +2,23 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="test.css">
+  <link rel="stylesheet" href="styling.css">
   <title>:)</title>
   <script type="text/javascript" src="d3.js"></script>
   
 </head>
 <!--The 2 divs are created to structure the dom elements-->
 
-  <h1>Html input i d3 -fuck Nick edition</h1>
+<div class="header">
+  <h1>Klimaberegneren</h1>
+</div>
+
+<div class="navbar">
+  <a href="index.html">Oversigt</a>
+  <a href="mainTest.html">Klimaberegneren</a>
+  <a href="#">Placeholder</a>
+ 
+</div>
 <div class="dumpster">
 <div class="sliders">
  <!--
@@ -58,7 +67,7 @@
   <script type="text/javascript">
     //variable and/or constant dumpster 
   
-     const w = 850;
+     const w = 1200;
     const h = 850;
     const margin = 20; 
   
@@ -114,7 +123,7 @@
       .append("svg")
       .attr("width", w)
       .attr("height", h);
-
+/*
  //append circles   
 svg.append("circle")
   .attr("id","c1")
@@ -134,20 +143,20 @@ svg.append("circle")
 
   svg.append("circle")
   .attr("id","c3")
-  .attr("cx", 160)
-  .attr("cy", 600) 
+  .attr("cx", 840)
+  .attr("cy", 200) 
   .style("fill", "none")   
   .style("stroke", "blue") 
   .attr("r", 120);
 
   svg.append("circle")
   .attr("id","c4")
-  .attr("cx", 500)
-  .attr("cy", 600) 
+  .attr("cx", 1280)
+  .attr("cy", 200) 
   .style("fill", "none")   
   .style("stroke", "blue") 
   .attr("r", 120);
-
+*/
   var modal = document.getElementById("resultModal");
   var btn = document.getElementById("resultbut");
   var span = document.getElementsByClassName("close")[0];
