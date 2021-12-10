@@ -11,6 +11,7 @@
 
 <div class="header">
   <h1>Klimaberegneren</h1>
+  <h4>Hvor bæredygtig er din livstil?</h4>
 </div>
 
 <div class="navbar">
@@ -28,7 +29,7 @@
   <p class="p1" > 
     <label for="cText1" 
            style="display: inline-block; width: 240px; text-align:match-present;top: 100px; left: 100px;  ">
-           Kødfrie dage = <span id="cText1-value">..</span>
+           Antal gange om ugen du spiser kød = <span id="cText1-value">..</span>
     </label>
     <input type="range" min="0" max="7" id="cText1" >
   </p>
@@ -38,7 +39,7 @@
            style="display: inline-block; width: 240px; text-align:match-present;top: 100px; left: 100px;  ">
            Flyrejser om året = <span id="cText2-value">..</span>
     </label>
-    <input type="range" min="0" max="365" id="cText2" >
+    <input type="range" min="0" max="12" id="cText2" >
   </p>
 
   <p class="p3"> 
@@ -61,8 +62,8 @@
 <div id ="resultModal" class="modal">
  <div class="modal-text">
    <span class="close">&times;</span>
-   <p>Din samlede udledning er <span id="rText"></span> kg Co2 om året</p>
-   <p>Hvis alle danskere gjorde som dig ville Danmarks årlige udledning være <span id="bigRtext"></span> kg Co2 om året</p>
+   <p>Din samlede udledning er <span id="rText"></span> tons Co2 om året</p>
+   <p>Hvis alle danskere gjorde som dig ville Danmarks årlige udledning være <span id="bigRtext"></span> mio. tons Co2 om året</p>
  </div>
 </div>
   <script type="text/javascript">
@@ -169,25 +170,51 @@ svg.append("circle")
 
   modal.style.display = "block";
 
-  let result = ((parseInt(cText1.value)*5,63)*52) + ((parseInt(cText2.value)*800)) + ((parseInt(cText3.value)*47)*12) + ((parseInt(cText4.value)*1,63)*52)
-  let bigResult = result * 6000000
+  let result = Math.round(((parseInt(cText1.value)*5,63)*52) + ((parseInt(cText2.value)*800)) + ((parseInt(cText3.value)*47)*12) + ((parseInt(cText4.value)*1,63)*52)/1000)
+  let bigResult = Math.round(((result * 6000000)/1000000)/1000)
+  
   document.getElementById("rText").innerHTML = result
   document.getElementById("bigRtext").innerHTML = bigResult
-
-
+  /*
+  switch(bigResult) {
+    case bigResult > (35*2): 
+    resultText = "oh no!"
+    return resultText
+    break; 
+    case bigResult < (35*2):
+    resultText = "needs some work!"
+    return resultText
+    break; 
+    case bigResult <= 35: 
+    resultText = "nice!"
+    return resultText
+    break;
+  }
+*/
   d3.select(".modal-text").append("svg") 
   .attr("id","modalSvg")
  .attr("height",500)
- .attr("width",950)
- 
+ .attr("width",700)
+ d3.select("#modalSvg")
   .append("g")
+  .append("text")
+  .text(function(d){ 
+    if (bigResult > (35.0*2)){
+      return "oh no!"
+    }
+    if (bigResult < (35.0*2) & bigResult > 35.0){
+      return "could do with some work"
+    }
+    if (bigResult <= (35.0)) {
+      return "nice!"
+    }
+  })
+  .attr("x",25)
+  .attr("y",25)
 
- let modalGroup= d3.select("g")
- modalGroup.append("text")
+ 
 
- .text("world is kill")
- .attr("x",25)
- .attr("y",25)
+
 
 
 }

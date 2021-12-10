@@ -22,6 +22,8 @@
   <div class="row">
     <div class="side">
       <h2>Historisk overblik over danmarks udledning</h2> 
+      <p id="xLabel">Tons Co2 udledt</p>
+      <p id=yLabel>År</p>
       <select id="dropdown">
       <option value="Transport">Transport</option>
       <option value="Landbrug">Landbrug</option>
@@ -34,7 +36,7 @@
     
       <div class="main">
       <h2>Hvor stor en byrde er de enkelte faktorer?</h2>
-      <select id="dropdown1"></select>
+      
     
     </div>
  
@@ -44,9 +46,9 @@
   d3.json("/test", {
     method: "POST", 
   }).then(function(response) {
-    const w = 600;
+    const w = 720;
     const h = 350;
-    const margin = 20; 
+    const margin = 30; 
     const data = response.data; // Hent data ud af response
     
     let columns = ["Landbrug","Energi","Industri og ervherv","Transport","Husholdning"] 
@@ -81,7 +83,7 @@ let svg = d3.selectAll("svg")
               .range([margin, w-margin ])
     let yScale = d3.scaleLinear()
               .domain([
-                d3.min(data,function (d){return (d.nettoudledning);}),
+                0,
                 d3.max(data, function (d){return (d.nettoudledning);})
               ])
               .range([h-margin, margin ])
@@ -128,7 +130,7 @@ let svg = d3.selectAll("svg")
   d3.select("#sideSvg")
 
   .append("g")
-.attr("transform", "translate(20,0)")
+.attr("transform", "translate(30,0)")
 .attr("id","yAxis")
       .call(
   
@@ -180,6 +182,7 @@ const line = svg
 .attr("stroke","pink")
 .attr("stroke-width", 4)
 .attr("fill","none")
+
 .attr("d", d3.line()
 .x(function(d){ return xScale(d3.utcParse("%Y-%m-%dT%H:%M:%S.%LZ")(d.dato))})
 .y(function(d) { return yScale(d.nettoudledning ) })
@@ -189,28 +192,7 @@ function updateYscale (dataSelection) {
   let selectedData = d3.selectAll("#dropdown").property("value")
   yScale 
               .domain([
-                d3.min(data,function (d){
-                  let i = d 
-                  if (selectedData == "Landbrug") {
-                    i = d.landbrug
-                  } else 
-                  if (selectedData == "Energi"){
-                    i = d.energi
-                  } else
-                  if (selectedData == "Industri og ervherv"){
-                    i = d.industi_og_ervherv
-                  } else 
-                  if (selectedData == "Transport"){
-                    i = d.transport
-                  } else 
-                  if (selectedData == "Husholdning"){
-                    i = d.husholdning
-                  } else 
-                  if (selectedData == "Samlet udledning"){
-                    i = d.nettoudledning
-                  }
-                 d = i
-                return d;}),
+                   0,
                 
                 d3.max(data, function (d){
                   let i = d 
@@ -237,7 +219,7 @@ function updateYscale (dataSelection) {
               ])
         
         yAxis.transition(1000)
-        .attr("transform", "translate(20,0)")
+        .attr("transform", "translate(30,0)")
         .call(d3.axisLeft(yScale))
 
         line 
