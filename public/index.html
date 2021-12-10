@@ -292,8 +292,7 @@ console.log("update barchart works?")
 
 let timeFormatter = d3.timeFormat("%Y")
 
-let sideDropdown = d3.select("#dropdown1")
-sideDropdown.append("select")
+d3.select("#dropdown1")
 .selectAll("options")
 .data(data)
 .enter()

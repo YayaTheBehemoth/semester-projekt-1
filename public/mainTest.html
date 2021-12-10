@@ -28,40 +28,41 @@
   <p class="p1" > 
     <label for="cText1" 
            style="display: inline-block; width: 240px; text-align:match-present;top: 100px; left: 100px;  ">
-           Udledning fra fly = <span id="cText1-value">..</span>
+           Kødfrie dage = <span id="cText1-value">..</span>
     </label>
-    <input type="range" min="1" max="150" id="cText1" >
+    <input type="range" min="0" max="7" id="cText1" >
   </p>
 
   <p class="p2"> 
     <label for="cText2" 
            style="display: inline-block; width: 240px; text-align:match-present;top: 100px; left: 100px;  ">
-           Udledning fra kød = <span id="cText2-value">..</span>
+           Flyrejser om året = <span id="cText2-value">..</span>
     </label>
-    <input type="range" min="1" max="150" id="cText2" >
+    <input type="range" min="0" max="365" id="cText2" >
   </p>
 
   <p class="p3"> 
     <label for="cText3" 
            style="display: inline-block; width: 240px; text-align:match-present;top: 100px; left: 100px;  ">
-           Udledning fra energi = <span id="cText3-value">..</span>
+           Månedelige tøjkøb = <span id="cText3-value">..</span>
     </label>
-    <input type="range" min="1" max="150" id="cText3" >
+    <input type="range" min="0" max="31" id="cText3" >
   </p>
 
   <p class="p4"> 
     <label for="cText4" 
            style="display: inline-block; width: 240px; text-align:match-present;top: 100px; left: 100px;  ">
-           Udledning fra Landbrug = <span id="cText4-value">..</span>
+           Dage du tager bilen = <span id="cText4-value">..</span>
     </label>
-    <input type="range" min="1" max="150" id="cText4" >
+    <input type="range" min="0" max="7" id="cText4" >
   </p>
 </div>
 <button id="resultbut">Udregn!</button>
 <div id ="resultModal" class="modal">
  <div class="modal-text">
    <span class="close">&times;</span>
-   <p>Den samlede udledning er <span id="rText"></span> </p>
+   <p>Din samlede udledning er <span id="rText"></span> kg Co2 om året</p>
+   <p>Hvis alle danskere gjorde som dig ville Danmarks årlige udledning være <span id="bigRtext"></span> kg Co2 om året</p>
  </div>
 </div>
   <script type="text/javascript">
@@ -168,9 +169,10 @@ svg.append("circle")
 
   modal.style.display = "block";
 
-  let result = parseInt(cText1.value) + parseInt(cText2.value) + parseInt(cText3.value) + parseInt(cText4.value)
+  let result = ((parseInt(cText1.value)*5,63)*52) + ((parseInt(cText2.value)*800)) + ((parseInt(cText3.value)*47)*12) + ((parseInt(cText4.value)*1,63)*52)
+  let bigResult = result * 6000000
   document.getElementById("rText").innerHTML = result
-  
+  document.getElementById("bigRtext").innerHTML = bigResult
 
 
   d3.select(".modal-text").append("svg") 
