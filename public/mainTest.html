@@ -21,6 +21,14 @@
  
 </div>
 <div class="dumpster">
+  <p id="explainer">Værktøjet du ser her, er "klimaberegneren"<br>
+  Du trækker blot i de nedenstående slidere, til deres værdier passer på din livstil<br>
+  Efterfølgende trykker du på "Udregn!" for at regne ud, hvor meget Co2 du udleder på et år
+  </p>
+  <img src="https://media.istockphoto.com/photos/raw-fillet-steaks-picture-id183321410?k=20&m=183321410&s=612x612&w=0&h=OHlGMaDIwGO4jrXkNdKH3ywLmMtJyFMLyL6T9CfTr6Y=" id="beefPic">
+  <img src="https://www.seekpng.com/png/full/12-127225_plane-picture-png-airplane-white-background.png" id="planePic">
+  <img src="https://i.redd.it/vkib71tz8z961.jpg" id="gokuPic">
+  <img src="https://www.pngkit.com/png/full/47-470806_full-service-car-wash-car-wash-white-background.png" id="carPic">
 <div class="sliders">
  <!--
    the different p elements are essentially just wrappers for the sliders and their labels
@@ -29,41 +37,42 @@
   <p class="p1" > 
     <label for="cText1" 
            style="display: inline-block; width: 240px; text-align:match-present;top: 100px; left: 100px;  ">
-           Antal gange om ugen du spiser kød = <span id="cText1-value">..</span>
+           Dage om ugen du spiser kød = <span id="cText1-value">0</span>
     </label>
-    <input type="range" min="0" max="7" id="cText1" >
+    <input type="range" min="0" max="7" value="0" id="cText1" >
   </p>
 
   <p class="p2"> 
     <label for="cText2" 
            style="display: inline-block; width: 240px; text-align:match-present;top: 100px; left: 100px;  ">
-           Flyrejser om året = <span id="cText2-value">..</span>
+           Flyrejser om året = <span id="cText2-value">0</span>
     </label>
-    <input type="range" min="0" max="12" id="cText2" >
+    <input type="range" min="0" max="12" value="0" id="cText2" >
   </p>
 
   <p class="p3"> 
     <label for="cText3" 
            style="display: inline-block; width: 240px; text-align:match-present;top: 100px; left: 100px;  ">
-           Månedelige tøjkøb = <span id="cText3-value">..</span>
+           Månedelige tøjkøb = <span id="cText3-value">0</span>
     </label>
-    <input type="range" min="0" max="31" id="cText3" >
+    <input type="range" min="0" max="31" value="0" id="cText3" >
   </p>
 
   <p class="p4"> 
     <label for="cText4" 
            style="display: inline-block; width: 240px; text-align:match-present;top: 100px; left: 100px;  ">
-           Dage du tager bilen = <span id="cText4-value">..</span>
+           Dage du tager bilen = <span id="cText4-value">0</span>
     </label>
-    <input type="range" min="0" max="7" id="cText4" >
+    <input type="range" min="0" max="7" value="0" id="cText4" >
   </p>
 </div>
 <button id="resultbut">Udregn!</button>
 <div id ="resultModal" class="modal">
  <div class="modal-text">
    <span class="close">&times;</span>
-   <p>Din samlede udledning er <span id="rText"></span> tons Co2 om året</p>
-   <p>Hvis alle danskere gjorde som dig ville Danmarks årlige udledning være <span id="bigRtext"></span> mio. tons Co2 om året</p>
+   <p id="rLine1">Din samlede udledning er <span id="rText"></span> tons Co2 om året</p>
+   <p id="rLine2">Hvis alle danskere gjorde som dig ville Danmarks årlige udledning være <span id="bigRtext"></span> mio. tons Co2 om året</p>
+   <p id="rLine3">Danmarks mål er at have en årlig udledning på 35 mio tons Co2 årligt, du er altså <span id="gText"></span> mio tons Co2 for at nå målet</p>
  </div>
 </div>
   <script type="text/javascript">
@@ -170,11 +179,24 @@ svg.append("circle")
 
   modal.style.display = "block";
 
-  let result = Math.round(((parseInt(cText1.value)*5,63)*52) + ((parseInt(cText2.value)*800)) + ((parseInt(cText3.value)*47)*12) + ((parseInt(cText4.value)*1,63)*52)/1000)
-  let bigResult = Math.round(((result * 6000000)/1000000)/1000)
-  
+  let result = ((((parseInt(cText1.value)*5,63)*52) + ((parseInt(cText2.value)*800)) + ((parseInt(cText3.value)*47)*12) + ((parseInt(cText4.value)*1,63)*52))/1000)
+  let bigResult = ((result * 6000000)/1000000)
+  let goalResult = 0
+
+       function difference (result) {
+          if (result > 35){
+            goalResult = result - 35
+            return goalResult
+          }
+          if (result <= 35){
+            goalresult = 35 - result
+            return goalResult
+          }
+       }
+  difference(bigResult)
   document.getElementById("rText").innerHTML = result
-  document.getElementById("bigRtext").innerHTML = bigResult
+  document.getElementById("bigRtext").innerHTML = Math.round(bigResult)
+  document.getElementById("gText").innerHTML = Math.round(goalResult)
   /*
   switch(bigResult) {
     case bigResult > (35*2): 
@@ -195,15 +217,14 @@ svg.append("circle")
   .attr("id","modalSvg")
  .attr("height",500)
  .attr("width",700)
- d3.select("#modalSvg")
-  .append("g")
+ .append("g")
+ /*
+ d3.select("g")
+  
   .append("text")
   .text(function(d){ 
-    if (bigResult > (35.0*2)){
+    if (bigResult > (35.0)){
       return "oh no!"
-    }
-    if (bigResult < (35.0*2) & bigResult > 35.0){
-      return "could do with some work"
     }
     if (bigResult <= (35.0)) {
       return "nice!"
@@ -211,10 +232,12 @@ svg.append("circle")
   })
   .attr("x",25)
   .attr("y",25)
-
- 
-
-
+*/
+ d3.select("g")
+.append("svg:image")
+.attr("xlink:href","https://blogs.missouristate.edu/polsci/files/2019/08/Globe.gif")
+.attr("id","globePic")
+.attr("transform","translate(250,10)")
 
 
 }

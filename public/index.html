@@ -21,8 +21,8 @@
   
   <div class="row">
     <div class="side">
-      <h2>Historisk overblik over danmarks udledning</h2> 
-      <p id="xLabel">Tons Co2 udledt</p>
+      <h2 id = sideHeader>Historisk overblik over danmarks udledning</h2> 
+      <p id="xLabel">Mio tons Co2 udledt</p>
       <p id=yLabel>År</p>
       <select id="dropdown">
       <option value="Transport">Transport</option>
@@ -39,7 +39,12 @@
       
     
     </div>
- 
+
+<h2 id = "textHeader"> Hvad er det egentlig jeg kigger på??</h2>
+<p id= graphText> Ovenstående line-graph illustrerer mængden af Co2 der er blevet<br> 
+  udledt af en række faktorer i perioden 1990-2030. Tallene du ser efter<br>
+   2021 er et estimat givet af energistyrelsen </p>
+
   <script>
   // Denne query kører op imod API'en som findes i 'main.js'.
   // Denne HTML skal derfor åbnes igennem serveren for at virke.
