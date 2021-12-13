@@ -21,39 +21,57 @@
   
   <div class="row">
     <div class="side">
-      <h2>Historisk overblik over danmarks udledning</h2> 
+      <h2 id = sideHeader>Historisk overblik over danmarks udledning</h2> 
+      <p id="xLabel">Mio tons Co2 udledt</p>
+      <p id=yLabel>År</p>
       <select id="dropdown">
       <option value="Transport">Transport</option>
       <option value="Landbrug">Landbrug</option>
       <option value="Industri og ervherv">Industri og ervherv</option>
-      <option value="Energi">Transport</option>
+      <option value="Energi">Energi</option>
       <option value="Husholdning">Husholdning</option>
       <option value="Samlet udledning" selected="selected">Samlet udledning</option>
       </select>
     </div>
     
       <div class="main">
-      <h2>Visualisering</h2></div>
- 
+      <h2>Hvor stor en byrde er de enkelte faktorer?</h2>
+      
+    
+    </div>
+
+<h2 id = "textHeader"> Hvad er det egentlig jeg kigger på??</h2>
+<p id= graphText> Ovenstående line-graph illustrerer mængden af Co2 der er blevet<br> 
+  udledt af en række faktorer i perioden 1990-2030. Tallene du ser efter<br>
+   2021 er et estimat givet af energistyrelsen </p>
+
   <script>
   // Denne query kører op imod API'en som findes i 'main.js'.
   // Denne HTML skal derfor åbnes igennem serveren for at virke.
   d3.json("/test", {
     method: "POST", 
   }).then(function(response) {
-    const w = 500;
+    const w = 720;
     const h = 350;
-    const margin = 20; 
+    const margin = 30; 
     const data = response.data; // Hent data ud af response
-    /*
-    let columns = ["Samlet udledning","Landbrug","Energi","industi og ervherv","transport","husholdning"] // options for the dropdown button 
-   */
+    
+    let columns = ["Landbrug","Energi","Industri og ervherv","Transport","Husholdning"] 
+
+   
    const timeParse =  d3.utcParse("%Y-%m-%dT%H:%M:%S.%LZ")
     console.log("data", data);
-    var key = d3.map(data, function(d){return d3.utcParse("%Y-%m-%dT%H:%M:%S.%LZ")(d.dato)}).keys()
+    let key = d3.map(data, function(d){
+      return (d.dato)
+    }).keys()
+    let years = d3.map(data, function(d){return d3.utcParse("%Y-%m-%dT%H:%M:%S.%LZ")(d.dato)}).keys()
+console.log(data[0].dato)
+console.log( data[0].energi_pct)
     d3.selectAll(".side")
 .append("svg")
+.attr("id","sideSvg")
 let svg = d3.selectAll("svg")
+
 .attr("height", h)
 .attr("width",w)
   /* log statement to troubleshoot issues in relation to fetching the correct rows from "data" [FIXED]
@@ -61,8 +79,7 @@ let svg = d3.selectAll("svg")
          console.log((dateParse(data[i].dato)))
       }
    */ 
-   //defining scales, used later for when we want to add axes 
-
+   //defining scales, used later for when we want to add axes
    let xScale = d3.scaleTime()
               .domain([ 
                 d3.min(data, function (d){return d3.utcParse("%Y-%m-%dT%H:%M:%S.%LZ")(d.dato);}),
@@ -71,10 +88,40 @@ let svg = d3.selectAll("svg")
               .range([margin, w-margin ])
     let yScale = d3.scaleLinear()
               .domain([
-                d3.min(data,function (d){return (d.nettoudledning);}),
+                0,
                 d3.max(data, function (d){return (d.nettoudledning);})
               ])
               .range([h-margin, margin ])
+    let rectScale0 = d3.scaleLinear()
+    .domain([ 
+                d3.min(data, function (d){return d.energi_pct}),
+                d3.max(data, function (d){return d.energi_pct})
+              ])
+    .range([margin,h-margin])
+    let rectScale1 = d3.scaleLinear()
+    .domain([ 
+                d3.min(data, function (d){return d.industi_og_ervherv_pct }),
+                d3.max(data, function (d){return d.industi_og_ervherv_pct})
+              ])
+    .range([margin,h-margin])
+    let rectScale2 = d3.scaleLinear()
+    .domain([ 
+                d3.min(data, function (d){return d.landbrug_pct }),
+                d3.max(data, function (d){return d.landbrug_pct})
+              ])
+    .range([margin,h-margin])
+    let rectScale3 = d3.scaleLinear()
+    .domain([ 
+                d3.min(data, function (d){return d.transport_pct}),
+                d3.max(data, function (d){return d.transport_pct})
+              ])
+    .range([margin,h-margin])
+    let rectScale4 = d3.scaleLinear()
+    .domain([ 
+                d3.min(data, function (d){return d.husholdning_pct}),
+                d3.max(data, function (d){return d.husholdning_pct})
+              ])
+    .range([margin,h-margin])
   //defines axes 
   let xAxis = 
   svg.append("g")
@@ -82,18 +129,20 @@ let svg = d3.selectAll("svg")
 .attr("transform", "translate(0," + (h-margin) + ")")
 .call(
   d3.axisBottom()
-                .scale(xScale)
-)
+  .scale(xScale)
+     )
   let yAxis = 
-svg.append("g")
+  d3.select("#sideSvg")
 
-.attr("transform", "translate(20,0)")
+  .append("g")
+.attr("transform", "translate(30,0)")
 .attr("id","yAxis")
       .call(
   
-                d3.axisLeft()
-                .scale(yScale)
+        d3.axisLeft()
+        .scale(yScale)
       )
+
          //lav dropdown menu ud fra html element
          /*
   d3.select("#dropdown")
@@ -138,6 +187,7 @@ const line = svg
 .attr("stroke","pink")
 .attr("stroke-width", 4)
 .attr("fill","none")
+
 .attr("d", d3.line()
 .x(function(d){ return xScale(d3.utcParse("%Y-%m-%dT%H:%M:%S.%LZ")(d.dato))})
 .y(function(d) { return yScale(d.nettoudledning ) })
@@ -147,28 +197,7 @@ function updateYscale (dataSelection) {
   let selectedData = d3.selectAll("#dropdown").property("value")
   yScale 
               .domain([
-                d3.min(data,function (d){
-                  let i = d 
-                  if (selectedData == "Landbrug") {
-                    i = d.landbrug
-                  } else 
-                  if (selectedData == "Energi"){
-                    i = d.energi
-                  } else
-                  if (selectedData == "Industri og ervherv"){
-                    i = d.industi_og_ervherv
-                  } else 
-                  if (selectedData == "Transport"){
-                    i = d.transport
-                  } else 
-                  if (selectedData == "Husholdning"){
-                    i = d.husholdning
-                  } else 
-                  if (selectedData == "Samlet udledning"){
-                    i = d.nettoudledning
-                  }
-                 d = i
-                return d;}),
+                   0,
                 
                 d3.max(data, function (d){
                   let i = d 
@@ -193,11 +222,11 @@ function updateYscale (dataSelection) {
                  d = i
                 return d;})
               ])
-           
+        
         yAxis.transition(1000)
-        .attr("transform", "translate(20,0)")
+        .attr("transform", "translate(30,0)")
         .call(d3.axisLeft(yScale))
-       
+
         line 
   .datum(data)
   .transition(1000)
@@ -227,6 +256,65 @@ function updateYscale (dataSelection) {
   return d;
   }))
 }
+function updateBarchart (dataSelection, i) {
+  let selectedYear = d3.select("#dropdown1").property("value")
+   let d = selectedYear
+   if (d == data[i]){
+d3.select("#rect0")
+.attr("height" ,function(d){return (h - rectScale0(d[i].energi_pct))*4})
+d3.select("#rect1")
+.attr("height",function(d){return (h - rectScale1(d[i].industi_og_ervherv_pct))*4})
+d3.select("#rect2")
+.attr("height",function(d){return (h - rectScale2(d[i].landbrug_pct))*4})
+d3.select("#rect3")
+.attr("height",function(d){return (h - rectScale3(d[i].transport_pct))*4})
+d3.select("#rect4")
+.attr("height",function(d){return (h - rectScale4(d[i].husholdning_pct))*4})
+console.log("update barchart works?")
+   }
+    selectedYear = d 
+   return d 
+}
+
+
+let timeFormatter = d3.timeFormat("%Y")
+
+d3.select("#dropdown1")
+.selectAll("options")
+.data(data)
+.enter()
+.append("option")
+.attr("value", function(d){return ((d.dato));})
+.text(function (d){return timeFormatter(d3.utcParse("%Y-%m-%dT%H:%M:%S.%LZ")(d.dato));})
+
+
+d3.selectAll(".main")
+.append("svg")
+.attr("id","mainSvg1")
+ d3.selectAll("svg")
+
+.attr("height", h)
+.attr("width",w)
+for (let i = 0 ; i < 5; i++){
+  d3.select("#mainSvg1")
+  .append("rect")
+  .data(data)
+  .attr("id", `rect${i}`)
+  .attr("x",(i+1)*100)
+  .attr("y", 280)
+  .attr("width",40)
+  
+}
+d3.select("#rect0")
+.attr("height" ,function(d){return (h - rectScale0(data[0].energi_pct))*4})
+d3.select("#rect1")
+.attr("height",function(d){return (h - rectScale1(data[0].industi_og_ervherv_pct))*4})
+d3.select("#rect2")
+.attr("height",function(d){return (h - rectScale2(data[0].landbrug_pct))*4})
+d3.select("#rect3")
+.attr("height",function(d){return (h - rectScale3(data[0].transport_pct))*4})
+d3.select("#rect4")
+.attr("height",function(d){return (h - rectScale4(data[0].husholdning_pct))*4})
 // function that updates graph when a different option is chosen in the dropdown 
 function updateGraph (dataSelection) {
   /*
@@ -263,18 +351,18 @@ function updateGraph (dataSelection) {
 }
 //binds an event listener to the button that calls the function to update the graph accordingly to the option chosen in the dropdown 
 d3.select("#dropdown").on("change", function(d){
-
-  let selectedGraph = (d3.select(this).property("value"))
-  
+let selectedGraph = (d3.select(this).property("value"))
   updateYscale(selectedGraph)
-  
+  })
+  d3.select("#dropdown1").on("change", function(d){
+let selectedYear = (d3.select(this).property("value"))
+  updateBarchart(selectedYear)
+  })
+
 
 })
 
 
-    })
-
-  
   </script>
 </body>
 </html>

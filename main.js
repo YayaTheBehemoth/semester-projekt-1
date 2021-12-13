@@ -60,8 +60,6 @@ app.use(morgan("combined"));
 
 /*
  * Her defineres API'en.
- * Man laver lige så mange endpoints man har lyst til. Jeg har lavet et enkelt til
- * querien `SELECT 'Hello, World' as message`.
  */
 app.post("/test", async (req, res) => {
   try {
