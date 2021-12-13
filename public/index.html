@@ -35,6 +35,7 @@
     </div>
     
       <div class="main">
+        <select id="dropdown1"></select>
       <h2>Hvor stor en byrde er de enkelte faktorer?</h2>
       
     
@@ -61,10 +62,9 @@
    
    const timeParse =  d3.utcParse("%Y-%m-%dT%H:%M:%S.%LZ")
     console.log("data", data);
-    let key = d3.map(data, function(d){
-      return (d.dato)
-    }).keys()
-    let years = d3.map(data, function(d){return d3.utcParse("%Y-%m-%dT%H:%M:%S.%LZ")(d.dato)}).keys()
+ 
+    let years = d3.map(data, function(d){return (data)}).keys()
+    console.log(years)
 console.log(data[0].dato)
 console.log( data[0].energi_pct)
     d3.selectAll(".side")
@@ -94,7 +94,7 @@ let svg = d3.selectAll("svg")
               .range([h-margin, margin ])
     let rectScale0 = d3.scaleLinear()
     .domain([ 
-                d3.min(data, function (d){return d.energi_pct}),
+                /*d3.min(data, function (d){return d.energi_pct})*/0,
                 d3.max(data, function (d){return d.energi_pct})
               ])
     .range([margin,h-margin])
@@ -256,9 +256,19 @@ function updateYscale (dataSelection) {
   return d;
   }))
 }
-function updateBarchart (dataSelection, i) {
-  let selectedYear = d3.select("#dropdown1").property("value")
-   let d = selectedYear
+function updateBarchart (dataSelection) {
+  console.log("update barchart works?")
+ 
+let yearSelection = d3.select("#dropdown1").property("value");
+let pass = yearSelection.energi
+console.log(parseFloat(yearSelection.energi_pct))
+ d3.select("#rect0")
+    .data(data)
+   .transition(1000)
+   .attr("height",function(d){return (h - rectScale0(yearSelection.energi_pct))*4})
+}
+
+   /*
    if (d == data[i]){
 d3.select("#rect0")
 .attr("height" ,function(d){return (h - rectScale0(d[i].energi_pct))*4})
@@ -270,13 +280,9 @@ d3.select("#rect3")
 .attr("height",function(d){return (h - rectScale3(d[i].transport_pct))*4})
 d3.select("#rect4")
 .attr("height",function(d){return (h - rectScale4(d[i].husholdning_pct))*4})
-console.log("update barchart works?")
+
    }
-    selectedYear = d 
-   return d 
-}
-
-
+ */
 let timeFormatter = d3.timeFormat("%Y")
 
 d3.select("#dropdown1")
@@ -284,7 +290,7 @@ d3.select("#dropdown1")
 .data(data)
 .enter()
 .append("option")
-.attr("value", function(d){return ((d.dato));})
+.attr("value", function(d){return ((data[1]));})
 .text(function (d){return timeFormatter(d3.utcParse("%Y-%m-%dT%H:%M:%S.%LZ")(d.dato));})
 
 
