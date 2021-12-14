@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html style="font-size: 16px;">
   <head>
+    <link rel="stylesheet" href="styling.css">
+    <title>:)</title>
+    <script type="text/javascript" src="d3.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="Web Software Developers, Key Features, Data Visualization, IT solutions, IT solutions, Web Analytics, We are directly involved in t​he process, Get in Touch!">
+    <meta name="keywords" content="Web Software Developers, Key Features, Data Visualization, IT solutions, IT solutions, Web Analytics, We are directly involved in the process, Get in Touch!">
     <meta name="description" content="">
     <meta name="page_type" content="np-template-header-footer-from-plugin">
     <title>Home</title>
@@ -242,7 +245,7 @@ d3.csv("linechart.csv", function(data) {
                             height = 400 - margin.top - margin.bottom;
                         
                         // append the svg object to the body of the page
-                        var svg = d3.select("#my_dataviz")
+                        var svg = d3.select("my_dataviz")
                           .append("svg")
                             .attr("width", width + margin.left + margin.right)
                             .attr("height", height + margin.top + margin.bottom)
