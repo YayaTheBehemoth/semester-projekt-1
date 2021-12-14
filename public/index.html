@@ -97,31 +97,31 @@ let svg = d3.selectAll("svg")
                 /*d3.min(data, function (d){return d.energi_pct})*/0,
                 d3.max(data, function (d){return d.energi_pct})
               ])
-    .range([margin,h-margin])
+    .range([ h-margin,margin])
     let rectScale1 = d3.scaleLinear()
     .domain([ 
-                d3.min(data, function (d){return d.industi_og_ervherv_pct }),
+               /* d3.min(data, function (d){return d.industi_og_ervherv_pct0 })*/0,
                 d3.max(data, function (d){return d.industi_og_ervherv_pct})
               ])
-    .range([margin,h-margin])
+    .range([ h-margin,margin])
     let rectScale2 = d3.scaleLinear()
     .domain([ 
-                d3.min(data, function (d){return d.landbrug_pct }),
+               /* d3.min(data, function (d){return d.landbrug_pct })*/0,
                 d3.max(data, function (d){return d.landbrug_pct})
               ])
-    .range([margin,h-margin])
+    .range([ h-margin,margin])
     let rectScale3 = d3.scaleLinear()
     .domain([ 
-                d3.min(data, function (d){return d.transport_pct}),
+               /* d3.min(data, function (d){return d.transport_pct})*/0,
                 d3.max(data, function (d){return d.transport_pct})
               ])
-    .range([margin,h-margin])
+    .range([ h,0])
     let rectScale4 = d3.scaleLinear()
     .domain([ 
-                d3.min(data, function (d){return d.husholdning_pct}),
+               /* d3.min(data, function (d){return d.husholdning_pct})*/0,
                 d3.max(data, function (d){return d.husholdning_pct})
               ])
-    .range([margin,h-margin])
+    .range([0, h])
   //defines axes 
   let xAxis = 
   svg.append("g")
@@ -256,6 +256,7 @@ function updateYscale (dataSelection) {
   return d;
   }))
 }
+/*
 function updateBarchart (dataSelection) {
   console.log("update barchart works?")
  
@@ -290,7 +291,13 @@ d3.select("#dropdown1")
 .data(data)
 .enter()
 .append("option")
-.attr("value", function(d){return ((data.dato));})
+.attr("value", function(d, i){
+  let id = i
+  for (let i = 0; i<data.length;i++){
+    i = i+1
+  }
+id = i
+  return id})
 .text(function (d){return timeFormatter(d3.utcParse("%Y-%m-%dT%H:%M:%S.%LZ")(d.dato));})
 
 
@@ -301,6 +308,111 @@ d3.selectAll(".main")
 
 .attr("height", h)
 .attr("width",w)
+
+
+d3.select("#mainSvg1")
+.append("rect")
+.data(data)
+.attr("id","rect0")
+.attr("x",100)
+.attr("y",280)
+.attr("width",40)
+.attr("height", function(d){return rectScale0(data[0].energi_pct)})
+
+d3.select("#mainSvg1")
+.append("rect")
+.data(data)
+.attr("id","rect1")
+.attr("x",200)
+.attr("y",280)
+.attr("width",40)
+.attr("height", function(d){return rectScale1(data[0].industi_og_ervherv_pct)})
+
+d3.select("#mainSvg1")
+.append("rect")
+.data(data)
+.attr("id","rect2")
+.attr("x",300)
+.attr("y",280)
+.attr("width",40)
+.attr("height", function(d){return  rectScale2(data[0].landbrug_pct)})
+
+d3.select("#mainSvg1")
+.append("rect")
+.data(data)
+.attr("id","rect3")
+.attr("x",400)
+.attr("y",280)
+.attr("width",40)
+.attr("height", function(d){return  rectScale3(data[0].transport_pct)})
+
+d3.select("#mainSvg1")
+.append("rect")
+.data(data)
+.attr("id","rect4")
+.attr("x",500)
+.attr("y",280)
+.attr("width",40)
+.attr("height", function(d){return  rectScale4(data[0].husholdning_pct)})
+d3.select("#mainSvg1")
+d3.selectAll("rect")
+.attr("transform", "translate(0," + (-(h-margin)) + ")")
+function updateBars0 (selectedYear0) {
+let yearSelection = d3.select("#dropdown1").property("value")
+for (let i = 0; i < data.length; i++){
+  if (i == yearSelection) { 
+    d3.select("#rect0")
+    .transition(1000)
+    .attr("height",function(d){return rectScale0(data[i].energi_pct)})
+   
+  }
+}
+}
+function updateBars1 (selectedYear1) {
+let yearSelection = d3.select("#dropdown1").property("value")
+for (let i = 0; i < data.length; i++){
+  if (i == yearSelection) { 
+    d3.select("#rect1")
+    .transition(1000)
+    .attr("height",function(d){return rectScale1(data[i].industi_og_ervherv_pct)})
+   
+  }
+}
+}
+function updateBars2 (selectedYear2) {
+let yearSelection = d3.select("#dropdown1").property("value")
+for (let i = 0; i < data.length; i++){
+  if (i == yearSelection) { 
+    d3.select("#rect2")
+    .transition(1000)
+    .attr("height",function(d){return  rectScale2(data[i].landbrug_pct)})
+   
+  }
+}
+}
+function updateBars3 (selectedYear3) {
+let yearSelection = d3.select("#dropdown1").property("value")
+for (let i = 0; i < data.length; i++){
+  if (i == yearSelection) { 
+    d3.select("#rect3")
+    .transition(1000)
+    .attr("height",function(d){return  rectScale3(data[i].transport_pct)})
+   
+  }
+}
+}
+function updateBars4 (selectedYear4) {
+let yearSelection = d3.select("#dropdown1").property("value")
+for (let i = 0; i < data.length; i++){
+  if (i == yearSelection) { 
+    d3.select("#rect4")
+    .transition(1000)
+    .attr("height",function(d){return  rectScale4(data[i].husholdning_pct)})
+   
+  }
+}
+}
+/*
 for (let i = 0 ; i < 5; i++){
   d3.select("#mainSvg1")
   .append("rect")
@@ -321,6 +433,7 @@ d3.select("#rect3")
 .attr("height",function(d){return (h - rectScale3(data[0].transport_pct))*4})
 d3.select("#rect4")
 .attr("height",function(d){return (h - rectScale4(data[0].husholdning_pct))*4})
+*/
 // function that updates graph when a different option is chosen in the dropdown 
 function updateGraph (dataSelection) {
   /*
@@ -362,7 +475,11 @@ let selectedGraph = (d3.select(this).property("value"))
   })
   d3.select("#dropdown1").on("change", function(d){
 let selectedYear = (d3.select(this).property("value"))
-  updateBarchart(selectedYear)
+  updateBars0(selectedYear)
+  updateBars1(selectedYear)
+  updateBars2(selectedYear)
+  updateBars3(selectedYear)
+  updateBars4(selectedYear)
   })
 
 
