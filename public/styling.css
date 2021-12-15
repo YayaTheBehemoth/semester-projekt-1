@@ -11,6 +11,7 @@
  
   /* Header */
   .header {
+    size: 80%;
     padding: 50px;
     text-align: center;
     background: limegreen;
@@ -78,7 +79,7 @@
 #graphText{
   position: relative;
   top: 50px; 
-  left: 300px;
+  left: -225px;
 }
   #textBox{
     position: absolute; 
@@ -86,9 +87,18 @@
   }
   #textHeader{
     position:relative; 
-    left: 750px
+    left: 200px
+  }
+  #textHeader1{
+    position:relative; 
+    left: 250px
   }
 
+  #graphText1{
+    position: relative;
+    top:50px;
+    left: -175px;
+  }
   
   #sideSvg{
     position: absolute; 
@@ -98,6 +108,7 @@
   }
   /* Main column */
   .main {   
+    position: relative;
     -ms-flex: 50%; /* IE10 */
     flex: 50%;
     background-color: white;
@@ -262,3 +273,60 @@
       .modalSvg{
         z-index:- 1;
       }
+
+    #mainSvg1{
+      position: relative; 
+      left: 50px; 
+    }
+
+    #mainHeader{
+      position: relative;
+      left: 150px
+    }
+
+    #eLabel{
+      position: absolute; 
+      left: 165px;
+      top: 420px; 
+     
+      
+    }
+
+    #iLabel{
+      position: absolute; 
+      left: 235px;
+      top: 420px;
+      font-size: 90%;
+    }
+    #lLabel{
+      position: absolute; 
+      left: 360px;
+      top: 420px; 
+     
+    }
+    #tLabel{
+      position: absolute; 
+      left: 455px;
+      top:420px; 
+ 
+    }
+    #hLabel{
+      position: absolute; 
+      left: 545px;
+      top: 420px; 
+    }
+
+    #yLabel2{
+      position: absolute;
+      top: 250px; 
+      left: -10px;
+      transform: rotate(-45deg);
+      font-size: 90%;
+    }
+    #dropdown1{
+      position: absolute;
+    }
+    
+  
+  
+    

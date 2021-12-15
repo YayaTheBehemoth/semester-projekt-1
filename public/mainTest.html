@@ -134,40 +134,7 @@
       .append("svg")
       .attr("width", w)
       .attr("height", h);
-/*
- //append circles   
-svg.append("circle")
-  .attr("id","c1")
-  .attr("cx", 160)
-  .attr("cy", 200) 
-  .style("fill", "none")   
-  .style("stroke", "blue") 
-  .attr("r", 120);
 
-  svg.append("circle")
-  .attr("id","c2")
-  .attr("cx", 500)
-  .attr("cy", 200) 
-  .style("fill", "none")   
-  .style("stroke", "blue") 
-  .attr("r", 120);
-
-  svg.append("circle")
-  .attr("id","c3")
-  .attr("cx", 840)
-  .attr("cy", 200) 
-  .style("fill", "none")   
-  .style("stroke", "blue") 
-  .attr("r", 120);
-
-  svg.append("circle")
-  .attr("id","c4")
-  .attr("cx", 1280)
-  .attr("cy", 200) 
-  .style("fill", "none")   
-  .style("stroke", "blue") 
-  .attr("r", 120);
-*/
   var modal = document.getElementById("resultModal");
   var btn = document.getElementById("resultbut");
   var span = document.getElementsByClassName("close")[0];
@@ -197,42 +164,13 @@ svg.append("circle")
   document.getElementById("rText").innerHTML = result
   document.getElementById("bigRtext").innerHTML = Math.round(bigResult)
   document.getElementById("gText").innerHTML = Math.round(goalResult)
-  /*
-  switch(bigResult) {
-    case bigResult > (35*2): 
-    resultText = "oh no!"
-    return resultText
-    break; 
-    case bigResult < (35*2):
-    resultText = "needs some work!"
-    return resultText
-    break; 
-    case bigResult <= 35: 
-    resultText = "nice!"
-    return resultText
-    break;
-  }
-*/
+
   d3.select(".modal-text").append("svg") 
   .attr("id","modalSvg")
  .attr("height",500)
  .attr("width",700)
  .append("g")
- /*
- d3.select("g")
-  
-  .append("text")
-  .text(function(d){ 
-    if (bigResult > (35.0)){
-      return "oh no!"
-    }
-    if (bigResult <= (35.0)) {
-      return "nice!"
-    }
-  })
-  .attr("x",25)
-  .attr("y",25)
-*/
+
  d3.select("g")
 .append("svg:image")
 .attr("xlink:href","https://blogs.missouristate.edu/polsci/files/2019/08/Globe.gif")
@@ -251,54 +189,7 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
-/*
-//create group element which will act as a wrapper for the button elements
-svg.append("g")
-const button = svg.selectAll("g")
-//append 'button'
-button.append("rect")
-.attr("x", 280)
-.attr("y",340)
-.attr("height",30)
-.attr("width",100)
-.attr("stroke","black")
-.attr("fill","white")
-//append text
-button.append("text")
-.text("click me!")
-.attr("x", 300)
-.attr("y",360)
-//event listener for the button 
-//highlights the button when cursor hovers over it
-d3.selectAll("g")
-.on("mouseover",function(){
-  d3.selectAll("rect")
-  .style("fill","pink")
-})
-//removes button highlight on mouseout
-d3.selectAll("g")
-.on("mouseout",function(){
-  d3.selectAll("rect")
-  .style("fill","white")
-})
-//function tied to button press
-.on("click", function(){
-  d3.selectAll("#buttonText")
-  .remove()
-  let result = parseInt(cText1.value) + parseInt(cText2.value) + parseInt(cText3.value) + parseInt(cText4.value)
-    svg.append("text") 
-    .attr("id", "buttonText")
-    .text(function(){
-      return `den samlede udledning er ${result}!`
-    })
-    .attr("x",600)
-    .attr("y",360)
-    d3.select("body")
-      .append("svg")
-      .attr("width", w)
-      .attr("height", h);
-  })
-*/
+
   </script>
    
   </div>
