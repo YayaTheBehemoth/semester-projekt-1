@@ -35,8 +35,17 @@
     </div>
     
       <div class="main">
+        <h2 id ="mainHeader">Hvor stor en byrde er de enkelte faktorer?</h2>
+        <p id = "eLabel">Energi</p>
+        <p id ="lLabel">Landbrug</p>
+        <p id="tLabel">Transport</p>
+        <p id="hLabel">Husholdning</p>
+        <p id = "iLabel">Industi og ervherv</p>
+        <p id = "yLabel2">Andel af den <br>
+                        samlede udledning</p>
         <select id="dropdown1"></select>
-      <h2>Hvor stor en byrde er de enkelte faktorer?</h2>
+     
+    
       
     
     </div>
@@ -45,6 +54,12 @@
 <p id= graphText> Ovenstående line-graph illustrerer mængden af Co2 der er blevet<br> 
   udledt af en række faktorer i perioden 1990-2030. Tallene du ser efter<br>
    2021 er et estimat givet af energistyrelsen </p>
+   
+<h2 id = "textHeader1"> Hvad er det egentlig jeg kigger på??</h2>
+<p id= graphText1> Ovenstående bar-chart illustrerer hvor stor en andel af <br> 
+  den samlede udledning de enkelte faktorer hver især udgør <br>
+    i perioden 1990-2030. Tallene du ser efter 2021 er et<br>
+     estimat givet af energistyrelsen </p>
 
   <script>
   // Denne query kører op imod API'en som findes i 'main.js'.
@@ -74,11 +89,8 @@ let svg = d3.selectAll("svg")
 
 .attr("height", h)
 .attr("width",w)
-  /* log statement to troubleshoot issues in relation to fetching the correct rows from "data" [FIXED]
-      for (let i = 0; i < data.length; i++){
-         console.log((dateParse(data[i].dato)))
-      }
-   */ 
+
+   
    //defining scales, used later for when we want to add axes
    let xScale = d3.scaleTime()
               .domain([ 
@@ -94,34 +106,36 @@ let svg = d3.selectAll("svg")
               .range([h-margin, margin ])
     let rectScale0 = d3.scaleLinear()
     .domain([ 
-                /*d3.min(data, function (d){return d.energi_pct})*/0,
+                d3.min(data, function (d){return d.energi_pct}),
                 d3.max(data, function (d){return d.energi_pct})
               ])
-    .range([ h-margin,margin])
+    .range([ h,0])
     let rectScale1 = d3.scaleLinear()
     .domain([ 
-               /* d3.min(data, function (d){return d.industi_og_ervherv_pct0 })*/0,
+               d3.min(data, function (d){return d.industi_og_ervherv_pct0 }),
                 d3.max(data, function (d){return d.industi_og_ervherv_pct})
               ])
-    .range([ h-margin,margin])
+    .range([ 0,h])
     let rectScale2 = d3.scaleLinear()
     .domain([ 
-               /* d3.min(data, function (d){return d.landbrug_pct })*/0,
+                d3.min(data, function (d){return d.landbrug_pct }),
                 d3.max(data, function (d){return d.landbrug_pct})
               ])
-    .range([ h-margin,margin])
+    .range([ 0,h])
     let rectScale3 = d3.scaleLinear()
     .domain([ 
-               /* d3.min(data, function (d){return d.transport_pct})*/0,
+               d3.min(data, function (d){return d.transport_pct}),
                 d3.max(data, function (d){return d.transport_pct})
               ])
-    .range([ h,0])
+    .range([ 0,h])
     let rectScale4 = d3.scaleLinear()
     .domain([ 
-               /* d3.min(data, function (d){return d.husholdning_pct})*/0,
+               d3.min(data, function (d){return d.husholdning_pct}),
                 d3.max(data, function (d){return d.husholdning_pct})
               ])
     .range([0, h])
+
+
   //defines axes 
   let xAxis = 
   svg.append("g")
@@ -143,48 +157,12 @@ let svg = d3.selectAll("svg")
         .scale(yScale)
       )
 
-         //lav dropdown menu ud fra html element
-         /*
-  d3.select("#dropdown")
-    .selectAll('myOptions')
-    .data(columns)
-    .enter()
-    .append('option')
-    .text(function(d){return d})
-    .attr("value",function(d){return d})
-    */
-//place svg inside the div called side
-
-/*
-svg.append("g")
-
-.attr("transform", "translate(0," + (h-margin) + ")")
-.call(xAxis)
-
-
-svg.append("g")
-
-.attr("transform", "translate(20,0)")
-.attr("id","yAxis")
-      .call(yAxis)
-      */
-/* scatterplot made to troubleshoot issues in relation to creating the linegraph [FIXED]
-svg.append("g")
-.selectAll("dot")
-.data(data)
-.enter()
-.append("circle")
-.attr("cx", function(d){ return xScale(d3.utcParse("%Y-%m-%dT%H:%M:%S.%LZ")(d.dato))})
-.attr("cy", function(d){ return yScale(d.nettoudledning)})
-.attr("r",5)
-.attr("fill","Black")
-*/
 //creates the line for the graph and initializes it at the value "nettoudledning"
 const line = svg
 .append("g")
 .append("path")
 .datum(data)
-.attr("stroke","pink")
+.attr("stroke","limegreen")
 .attr("stroke-width", 4)
 .attr("fill","none")
 
@@ -256,34 +234,7 @@ function updateYscale (dataSelection) {
   return d;
   }))
 }
-/*
-function updateBarchart (dataSelection) {
-  console.log("update barchart works?")
- 
-let yearSelection = d3.select("#dropdown1").property("value");
-let pass = yearSelection.energi
-console.log(parseFloat(yearSelection.energi_pct))
- d3.select("#rect0")
-    .data(data)
-   .transition(1000)
-   .attr("height",function(d){return (h - rectScale0(yearSelection.energi_pct))*4})
-}
 
-   /*
-   if (d == data[i]){
-d3.select("#rect0")
-.attr("height" ,function(d){return (h - rectScale0(d[i].energi_pct))*4})
-d3.select("#rect1")
-.attr("height",function(d){return (h - rectScale1(d[i].industi_og_ervherv_pct))*4})
-d3.select("#rect2")
-.attr("height",function(d){return (h - rectScale2(d[i].landbrug_pct))*4})
-d3.select("#rect3")
-.attr("height",function(d){return (h - rectScale3(d[i].transport_pct))*4})
-d3.select("#rect4")
-.attr("height",function(d){return (h - rectScale4(d[i].husholdning_pct))*4})
-
-   }
- */
 let timeFormatter = d3.timeFormat("%Y")
 
 d3.select("#dropdown1")
@@ -299,71 +250,142 @@ d3.select("#dropdown1")
 id = i
   return id})
 .text(function (d){return timeFormatter(d3.utcParse("%Y-%m-%dT%H:%M:%S.%LZ")(d.dato));})
-
+let testScale = d3.scaleLinear()
+    .domain([0,100])
+    .range([h,margin])
 
 d3.selectAll(".main")
 .append("svg")
 .attr("id","mainSvg1")
+
+.append("g")
+.attr("id","yAxis2")
+.call(
+  
+  d3.axisLeft()
+  .scale(testScale)
+)
+.attr("transform","translate(60,0)")
+
  d3.selectAll("svg")
 
-.attr("height", h)
+.attr("height", h -5)
 .attr("width",w)
 
-
 d3.select("#mainSvg1")
+.append("line")
+.style("stroke","black")
+.style("stroke-width",0.5)
+.attr("x1",40)
+.attr("y1",h - 5)
+.attr("x2",w-100)
+.attr("y2",h -5)
+    
+d3.select("#mainSvg1")
+.append("g")
 .append("rect")
 .data(data)
 .attr("id","rect0")
 .attr("x",100)
-.attr("y",280)
+.attr("y",function(d){return  ( testScale(data[0].energi_pct))  })
 .attr("width",40)
-.attr("height", function(d){return rectScale0(data[0].energi_pct)})
+.attr("height", function(d){return  testScale(data[0].energi_pct)})
+.attr("fill","limegreen")
+d3.select("#mainSvg1")
+.append("text")
+.attr("id","lText0")
+.text(function (d){ return ` ${Math.round(data[0].energi_pct)}%`})
+.attr("x",105)
+.attr("y",function(d){return  ((testScale(data[0].energi_pct)))- 5})
+
+
 
 d3.select("#mainSvg1")
+.append("g")
 .append("rect")
 .data(data)
 .attr("id","rect1")
 .attr("x",200)
-.attr("y",280)
+.attr("y",function(d){return  testScale(data[0].industi_og_ervherv_pct)})
 .attr("width",40)
-.attr("height", function(d){return rectScale1(data[0].industi_og_ervherv_pct)})
+.attr("height", function(d){return testScale(data[0].industi_og_ervherv_pct)})
+.attr("fill","limegreen")
+d3.select("#mainSvg1")
+.append("text")
+.attr("id","lText1")
+.text(function (d){ return `${Math.round(data[0].industi_og_ervherv_pct)}%`})
+.attr("x",205)
+.attr("y",function(d){return   ( testScale(data[0].industi_og_ervherv_pct))- 5})
+
 
 d3.select("#mainSvg1")
+.append("g")
 .append("rect")
 .data(data)
 .attr("id","rect2")
 .attr("x",300)
-.attr("y",280)
+.attr("y",function(d){return  testScale(data[0].landbrug_pct)})
 .attr("width",40)
-.attr("height", function(d){return  rectScale2(data[0].landbrug_pct)})
+.attr("height", function(d){return  testScale(data[0].landbrug_pct)})
+.attr("fill","limegreen")
+d3.select("#mainSvg1")
+.append("text")
+.attr("id","lText2")
+.text(function (d){ return `${Math.round(data[0].landbrug_pct)}%`})
+.attr("x",305)
+.attr("y",function(d){return   ( testScale(data[0].landbrug_pct))- 5})
+
 
 d3.select("#mainSvg1")
+.append("g")
 .append("rect")
 .data(data)
 .attr("id","rect3")
 .attr("x",400)
-.attr("y",280)
+.attr("y",function(d){return  testScale(data[0].transport_pct)})
 .attr("width",40)
-.attr("height", function(d){return  rectScale3(data[0].transport_pct)})
+.attr("height", function(d){return  testScale(data[0].transport_pct)})
+.attr("fill","limegreen")
+d3.select("#mainSvg1")
+.append("text")
+.attr("id","lText3")
+.text(function (d){ return `${Math.round(data[0].transport_pct)}%`})
+.attr("x",405)
+.attr("y",function(d){return  (  testScale(data[0].transport_pct))- 5})
+
 
 d3.select("#mainSvg1")
+.append("g")
 .append("rect")
 .data(data)
 .attr("id","rect4")
 .attr("x",500)
-.attr("y",280)
+.attr("y",function(d){return testScale(data[0].husholdning_pct)})
 .attr("width",40)
-.attr("height", function(d){return  rectScale4(data[0].husholdning_pct)})
+.attr("height", function(d){return  testScale(data[0].husholdning_pct)})
+.attr("fill","limegreen")
 d3.select("#mainSvg1")
-d3.selectAll("rect")
-.attr("transform", "translate(0," + (-(h-margin)) + ")")
+.append("text")
+.attr("id","lText4")
+.text(function (d){ return `${Math.round(data[0].husholdning_pct)}%`})
+.attr("x",505)
+.attr("y",function(d){return  ( testScale(data[0].husholdning_pct))-5})
+
+d3.select("mainSvg1")
+.selectAll("rect")
+.attr("transform","translate(0,30)")
 function updateBars0 (selectedYear0) {
 let yearSelection = d3.select("#dropdown1").property("value")
 for (let i = 0; i < data.length; i++){
   if (i == yearSelection) { 
+    d3.select("#lText0").text(function (d){return `${Math.round(data[i].energi_pct)}%`})
+    .transition(1000)
+    .attr("y",function(d){return  ( testScale(data[i].energi_pct))- 5})
     d3.select("#rect0")
     .transition(1000)
-    .attr("height",function(d){return rectScale0(data[i].energi_pct)})
+    .attr("y",function (d){return  testScale(data[i].energi_pct)})
+    .attr("height",function(d){return  testScale(data[i].energi_pct)})
+    
    
   }
 }
@@ -374,8 +396,11 @@ for (let i = 0; i < data.length; i++){
   if (i == yearSelection) { 
     d3.select("#rect1")
     .transition(1000)
-    .attr("height",function(d){return rectScale1(data[i].industi_og_ervherv_pct)})
-   
+    .attr("y",function (d){return  testScale(data[i].industi_og_ervherv_pct)})
+    .attr("height",function(d){return   testScale(data[i].industi_og_ervherv_pct)})
+    d3.select("#lText1").text( function (d){return `${Math.round(data[i].industi_og_ervherv_pct)}%`})
+    .transition(1000)
+    .attr("y",function(d){return  ( testScale(data[i].industi_og_ervherv_pct))- 5})
   }
 }
 }
@@ -385,8 +410,11 @@ for (let i = 0; i < data.length; i++){
   if (i == yearSelection) { 
     d3.select("#rect2")
     .transition(1000)
-    .attr("height",function(d){return  rectScale2(data[i].landbrug_pct)})
-   
+    .attr("y",function (d){return  testScale(data[i].landbrug_pct)})
+    .attr("height",function(d){return   testScale(data[i].landbrug_pct)})
+    d3.select("#lText2").text(function (d){return `${Math.round(data[i].landbrug_pct)}%`})
+    .transition(1000)
+    .attr("y",function(d){return  ( testScale(data[i].landbrug_pct))- 5})
   }
 }
 }
@@ -396,8 +424,12 @@ for (let i = 0; i < data.length; i++){
   if (i == yearSelection) { 
     d3.select("#rect3")
     .transition(1000)
-    .attr("height",function(d){return  rectScale3(data[i].transport_pct)})
-   
+    .attr("y",function (d){return testScale(data[i].transport_pct)})
+    .attr("height",function(d){return  testScale(data[i].transport_pct)})
+    d3.select("#lText3").text(function (d){return `${Math.round(data[i].transport_pct)}%`})
+    .transition(1000)
+    
+    .attr("y",function(d){return  (  testScale(data[i].transport_pct))- 5})
   }
 }
 }
@@ -407,67 +439,15 @@ for (let i = 0; i < data.length; i++){
   if (i == yearSelection) { 
     d3.select("#rect4")
     .transition(1000)
-    .attr("height",function(d){return  rectScale4(data[i].husholdning_pct)})
-   
+    .attr("y",function (d){return  testScale(data[i].husholdning_pct)})
+    .attr("height",function(d){return  testScale(data[i].husholdning_pct)})
+    d3.select("#lText4").text(function (d){return `${Math.round(data[i].husholdning_pct)}%`})
+    .transition(1000)
+    .attr("y",function(d){return  ( testScale(data[i].husholdning_pct))- 5})
   }
 }
 }
-/*
-for (let i = 0 ; i < 5; i++){
-  d3.select("#mainSvg1")
-  .append("rect")
-  .data(data)
-  .attr("id", `rect${i}`)
-  .attr("x",(i+1)*100)
-  .attr("y", 280)
-  .attr("width",40)
-  
-}
-d3.select("#rect0")
-.attr("height" ,function(d){return (h - rectScale0(data[0].energi_pct))*4})
-d3.select("#rect1")
-.attr("height",function(d){return (h - rectScale1(data[0].industi_og_ervherv_pct))*4})
-d3.select("#rect2")
-.attr("height",function(d){return (h - rectScale2(data[0].landbrug_pct))*4})
-d3.select("#rect3")
-.attr("height",function(d){return (h - rectScale3(data[0].transport_pct))*4})
-d3.select("#rect4")
-.attr("height",function(d){return (h - rectScale4(data[0].husholdning_pct))*4})
-*/
-// function that updates graph when a different option is chosen in the dropdown 
-function updateGraph (dataSelection) {
-  /*
-  let selectedData = d3.selectAll("#dropdown").property("value")
-  line 
-  .datum(data)
-  .transition(1000)
-  .attr("d", d3.line()
-  .x(function(d){ return xScale(d3.utcParse("%Y-%m-%dT%H:%M:%S.%LZ")(d.dato))})
-.y(function(d) { 
-  let i = d 
-  if (selectedData == "Landbrug") {
-    i = yScale(d.landbrug)
-  } else 
-  if (selectedData == "transport"){
-    i = yScale(d.transport)
-  } else 
-  if (selectedData == "Samlet udledning"){
-    i = yScale(d.nettoudledning)
-  } else
-  if (selectedData == "Energi"){
-    i = yScale(d.energi)
-  } else
-  if (selectedData == "industi og ervherv"){
-    i = yScale(d.industi_og_ervherv)
-  } else
-  if (selectedData == "husholdning"){
-    i = yScale(d.husholdning)
-  }
-  d = i 
-  return d;
-  }))
-*/
-}
+
 //binds an event listener to the button that calls the function to update the graph accordingly to the option chosen in the dropdown 
 d3.select("#dropdown").on("change", function(d){
 let selectedGraph = (d3.select(this).property("value"))
