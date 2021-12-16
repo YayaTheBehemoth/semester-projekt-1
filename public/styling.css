@@ -79,7 +79,7 @@
 #graphText{
   position: relative;
   top: 200px; 
-  left: -50px;
+  left: -75px;
 }
   #textBox{
     position: absolute; 
@@ -88,7 +88,7 @@
   }
   #textHeader{
     position:absolute; 
-    left: 900px;
+    left: 830px;
     top: 200px; 
     
   }
@@ -209,15 +209,17 @@
       }
       #rLine1{
         position: relative; 
-        left: 300px;
+        
       }
       #rLine2{
         position: relative; 
-        left: 100px;
+        top: 25px;
+        
       }
       #rLine3{
         position: relative; 
-        left: 50px;
+        top: 75px;
+        
       }
       #explainer{
         position: absolute; 
@@ -257,8 +259,8 @@
         margin: 15% auto; /* 15% from the top and centered */
         padding: 20px;
         border: 1px solid #888;
-        width: 55%; /* Could be more or less, depending on screen size */
-        height: 55%;
+        width: 65%; /* Could be more or less, depending on screen size */
+        height: 65%;
       }
       
       /* The Close Button */
@@ -277,7 +279,10 @@
       }
      
       .modalSvg{
-        z-index:- 1;
+        position: relative; 
+        left: 50px;
+        top: 200px;
+        z-index: -1;
       }
 
     #mainSvg1{
@@ -331,6 +336,10 @@
     }
     #dropdown1{
       position: absolute;
+    }
+
+    #globePic {
+    z-index: -1;
     }
     
   
