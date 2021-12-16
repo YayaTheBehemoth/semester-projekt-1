@@ -81,7 +81,7 @@
   }
 #graphText{
   position: absolute;
-  top: 250px; 
+  top: 450px; 
   left: 825px;
  
 }
@@ -93,7 +93,7 @@
   #textHeader{
     position:absolute; 
     left: 830px;
-    top: 200px; 
+    top: 400px; 
     width: fit-content;
   }
   #textHeader1{
@@ -122,7 +122,7 @@
     background-color: white;
     padding: 20px;
     left: 50px;
-    top: 500px;
+    top: 700px;
   }
   
   /* Fake image, just for this example */
