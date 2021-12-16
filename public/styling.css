@@ -69,7 +69,7 @@
     position: relative; 
     -ms-flex: 50%; /* IE10 */      
     flex: 50%;
-    background-color: #f1f1f1;
+    background-color: white;
     padding: 20px;
   }
   #sideHeader {
