@@ -1,5 +1,6 @@
 * {
-    box-sizing: fit-content;
+    box-sizing: border-box;
+    width: fit-content;
   }
   
   
