@@ -143,7 +143,7 @@
     .p1{
         position:absolute;
         top: 117px; 
-        left:225px 
+        left:150px 
        
     }
     
@@ -154,14 +154,14 @@
     }
     .p3{
         position:absolute; 
-        top: 117px; 
-        left: 1100px;
+        top: 475px; 
+        left: 75px;
         
     }
     .p4{
         position: absolute; 
-        top: 117px; 
-        left: 1500px;
+        top: 460px; 
+        left: 600px;
         
     }
 
@@ -191,8 +191,8 @@
       #gokuPic{
         position: absolute; 
         height: 40%; 
-        left: 1075px; 
-        top: 470px; 
+        left: 75px; 
+        top: 800px; 
       }
       #beefPic{
         transform: rotate(-90deg);
@@ -204,8 +204,8 @@
       }
       #carPic{
         position: absolute;
-        left: 1400;
-        top: 500;
+        left: 500px;
+        top: 800px;
       }
       #rLine1{
         position: relative; 
@@ -234,8 +234,8 @@
     */
       #resultbut {
           position: absolute;
-          top: 320;
-          left:900;
+          top: 400;
+          left:450;
           height: 20; 
           width: 100;
       }

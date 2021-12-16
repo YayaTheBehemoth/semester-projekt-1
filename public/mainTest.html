@@ -68,7 +68,8 @@
 <div id ="resultModal" class="modal">
  <div class="modal-text">
    <span class="close">&times;</span>
-   <p id="rLine1">Din samlede udledning er <span id="rText"></span> tons Co2 om året</p>
+   <p id="rLine1">Din samlede udledning er <span id="rText"></span> tons Co2 om <br>
+    året</p>
    <p id="rLine2">Hvis alle danskere gjorde som dig <br>
     ville Danmarks årlige udledning være <span id="bigRtext"></span> mio. tons Co2 om året</p>
    <p id="rLine3">Danmarks mål er at have en årlig udledning <br>
@@ -167,7 +168,7 @@
           
        }
   difference(bigResult)
-  document.getElementById("rText").innerHTML = (result)
+  document.getElementById("rText").innerHTML = Math.round(result)
   document.getElementById("bigRtext").innerHTML = Math.round(bigResult)
   
 
