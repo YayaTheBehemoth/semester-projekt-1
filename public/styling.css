@@ -1,27 +1,38 @@
 * {
 
+<<<<<<< HEAD
+  /*  box-sizing: border-box; */
+=======
     box-sizing: border-box;
   
+>>>>>>> d8a0ba175ca1a17e200093946a417f143d133baf
   }
-  
-  
+ /* head{
+    width: fit-content;
+  }
+  */
   body {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
+<<<<<<< HEAD
+ 
+=======
 
   
 
+>>>>>>> d8a0ba175ca1a17e200093946a417f143d133baf
   }
   
   
   /* Header */
   .header {
-    size: 80%;
+   
     padding: 50px;
     text-align: center;
     background: limegreen;
     color: white;
-    box-sizing: border-box;
+  
+   
   }
   
   /* Gør fonten større i headeren  */
@@ -61,25 +72,24 @@
   }
   
   /* Column container */
-  .row { 
-    position: relative;
-    display: -ms-flexbox; /* IE10 */
-    display: flex;
-    -ms-flex-wrap: wrap; /* IE10 */
-    flex-wrap: wrap;
-  }
+ 
   
   /* Create two unequal columns that sits next to each other */
   /* Sidebar/left column */
   .side {
     position: absolute; 
     -ms-flex: 50%; /* IE10 */      
+<<<<<<< HEAD
+  /*  flex: 50%; */
+    background-color: "white";
+=======
     flex: 50%;
     background-color: white;
+>>>>>>> d8a0ba175ca1a17e200093946a417f143d133baf
     padding: 20px;
   }
   #sideHeader {
-    position: absolute; 
+    position: relative; 
     left: 200px; 
   }
 #graphText{
@@ -105,14 +115,14 @@
   }
   #textHeader1{
     position:absolute; 
-    top: 780px;
+    top: 980px;
     left: 800px;
     width: fit-content;
   }
 
   #graphText1{
     position: absolute;
-    top:825px;
+    top:1025px;
     left: 800px;
     width: fit-content;
   }
@@ -127,7 +137,7 @@
   .main {   
     position: absolute;
     -ms-flex: 50%; /* IE10 */
-    flex: 50%;
+   /* flex: 50%; */
     background-color: white;
     padding: 20px;
     left: 50px;
@@ -181,7 +191,7 @@
     #xLabel {
     position: absolute; 
       top: 200px; 
-      left: 35px; 
+      left: -15px;
       transform: rotate(-50deg);
    
     }
@@ -212,7 +222,7 @@
         width: 25%; 
         height: 50%;
         position: absolute; 
-        top: 400px; 
+        top: 365px; 
         left: 50px; 
       }
       #carPic{
