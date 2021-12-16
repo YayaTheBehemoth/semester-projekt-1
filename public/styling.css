@@ -81,6 +81,7 @@
   position: relative;
   top: 200px; 
   left: -75px;
+  width: fit-content;
 }
   #textBox{
     position: absolute; 
@@ -91,18 +92,20 @@
     position:absolute; 
     left: 830px;
     top: 200px; 
-    
+    width: fit-content;
   }
   #textHeader1{
     position:absolute; 
     top: 780px;
     left: 800px;
+    width: fit-content;
   }
 
   #graphText1{
     position: absolute;
     top:825px;
     left: 800px;
+    width: fit-content;
   }
   
   #sideSvg{
