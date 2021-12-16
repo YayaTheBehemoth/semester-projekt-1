@@ -3,7 +3,7 @@
 
 <head>
   <link rel="stylesheet" href="styling.css">
-  <title>:)</title>
+  <title>Danmarks klimamål</title>
   <script type="text/javascript" src="d3.js"></script>
   
 </head>
@@ -69,8 +69,11 @@
  <div class="modal-text">
    <span class="close">&times;</span>
    <p id="rLine1">Din samlede udledning er <span id="rText"></span> tons Co2 om året</p>
-   <p id="rLine2">Hvis alle danskere gjorde som dig ville Danmarks årlige udledning være <span id="bigRtext"></span> mio. tons Co2 om året</p>
-   <p id="rLine3">Danmarks mål er at have en årlig udledning på 35 mio tons Co2 årligt, <span id="gText"></span> </p>
+   <p id="rLine2">Hvis alle danskere gjorde som dig <br>
+    ville Danmarks årlige udledning være <span id="bigRtext"></span> mio. tons Co2 om året</p>
+   <p id="rLine3">Danmarks mål er at have en årlig udledning <br>
+    på 35 mio tons Co2 årligt,<br>
+     <span id="gText"></span> </p>
  </div>
 </div>
   <script type="text/javascript">
@@ -157,7 +160,8 @@
           }
           if (result <= 35){
    
-            document.getElementById("gText").innerHTML = `Du er ${Math.abs(Math.round(goalResult))} mio Tons Co2 under Danmarks klimamål for 2030`
+            document.getElementById("gText").innerHTML = `Du er ${Math.abs(Math.round(goalResult))} mio Tons Co2 under  <br> 
+            Danmarks klimamål for 2030`
             
           }
           
@@ -173,13 +177,17 @@
   .attr("id","modalSvg")
  .attr("height",500)
  .attr("width",700)
+ .attr("transform","translate(0,-200)")
+ 
  .append("g")
+ .attr("transform","translate(350,50)")
 
  d3.select("g")
 .append("svg:image")
 .attr("xlink:href","https://blogs.missouristate.edu/polsci/files/2019/08/Globe.gif")
 .attr("id","globePic")
-.attr("transform","translate(250,10)")
+
+
 
 
 }
