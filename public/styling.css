@@ -1,4 +1,5 @@
 * {
+
     box-sizing: border-box;
   
   }
@@ -7,10 +8,12 @@
   body {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
-    width: fit-content;
+
+  
+
   }
   
- 
+  
   /* Header */
   .header {
     size: 80%;
@@ -18,6 +21,7 @@
     text-align: center;
     background: limegreen;
     color: white;
+    box-sizing: border-box;
   }
   
   /* Gør fonten større i headeren  */
@@ -68,7 +72,7 @@
   /* Create two unequal columns that sits next to each other */
   /* Sidebar/left column */
   .side {
-    position: relative; 
+    position: absolute; 
     -ms-flex: 50%; /* IE10 */      
     flex: 50%;
     background-color: white;
@@ -79,10 +83,13 @@
     left: 200px; 
   }
 #graphText{
-  position: relative;
-  top: 200px; 
-  left: -75px;
-  width: fit-content;
+
+  position: absolute;
+  top: 450px; 
+  left: 825px;
+ 
+
+
 }
   #textBox{
     position: absolute; 
@@ -92,8 +99,9 @@
   #textHeader{
     position:absolute; 
     left: 830px;
-    top: 200px; 
-    width: fit-content;
+
+    top: 400px; 
+
   }
   #textHeader1{
     position:absolute; 
@@ -117,13 +125,13 @@
   }
   /* Main column */
   .main {   
-    position: relative;
+    position: absolute;
     -ms-flex: 50%; /* IE10 */
     flex: 50%;
     background-color: white;
     padding: 20px;
     left: 50px;
-    top: 500px;
+    top: 700px;
   }
   
   /* Fake image, just for this example */
@@ -173,7 +181,7 @@
     #xLabel {
     position: absolute; 
       top: 200px; 
-      left: -15px; 
+      left: 35px; 
       transform: rotate(-50deg);
    
     }
