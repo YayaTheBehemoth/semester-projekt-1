@@ -1,13 +1,16 @@
 * {
 
     box-sizing: border-box;
+  
   }
   
   
   body {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
+
   
+
   }
   
   
@@ -72,7 +75,7 @@
     position: absolute; 
     -ms-flex: 50%; /* IE10 */      
     flex: 50%;
-    background-color: #f1f1f1;
+    background-color: white;
     padding: 20px;
   }
   #sideHeader {
@@ -80,10 +83,13 @@
     left: 200px; 
   }
 #graphText{
+
   position: absolute;
   top: 450px; 
   left: 825px;
  
+
+
 }
   #textBox{
     position: absolute; 
@@ -93,19 +99,22 @@
   #textHeader{
     position:absolute; 
     left: 830px;
+
     top: 400px; 
-    width: fit-content;
+
   }
   #textHeader1{
     position:absolute; 
     top: 780px;
     left: 800px;
+    width: fit-content;
   }
 
   #graphText1{
     position: absolute;
     top:825px;
     left: 800px;
+    width: fit-content;
   }
   
   #sideSvg{
