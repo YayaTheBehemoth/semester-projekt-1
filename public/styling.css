@@ -27,8 +27,8 @@
   .navbar {
     overflow: hidden;
     background-color: #333;
-    position: sticky;
-    position: -webkit-sticky;
+  
+   
     top: 0;
   }
   
@@ -78,26 +78,30 @@
   }
 #graphText{
   position: relative;
-  top: 50px; 
-  left: -225px;
+  top: 200px; 
+  left: -50px;
 }
   #textBox{
     position: absolute; 
-    top:450px; 
+    left: 900px;
+    top:250px; 
   }
   #textHeader{
-    position:relative; 
-    left: 200px
+    position:absolute; 
+    left: 900px;
+    top: 200px; 
+    
   }
   #textHeader1{
-    position:relative; 
-    left: 250px
+    position:absolute; 
+    top: 780px;
+    left: 800px;
   }
 
   #graphText1{
-    position: relative;
-    top:50px;
-    left: -175px;
+    position: absolute;
+    top:825px;
+    left: 800px;
   }
   
   #sideSvg{
@@ -113,6 +117,8 @@
     flex: 50%;
     background-color: white;
     padding: 20px;
+    left: 50px;
+    top: 500px;
   }
   
   /* Fake image, just for this example */
