@@ -78,26 +78,29 @@
   }
 #graphText{
   position: relative;
-  top: 50px; 
-  left: -225px;
+  top: 450px; 
+  left: -800px;
 }
   #textBox{
     position: absolute; 
     top:450px; 
   }
   #textHeader{
-    position:relative; 
-    left: 200px
+    position:absolute; 
+    left: 200px;
+    top: 450px; 
+    
   }
   #textHeader1{
-    position:relative; 
-    left: 250px
+    position:absolute; 
+    top: 450px;
+    left: 1050px;
   }
 
   #graphText1{
-    position: relative;
-    top:50px;
-    left: -175px;
+    position: absolute;
+    top:525px;
+    left: 1050px;
   }
   
   #sideSvg{
@@ -113,6 +116,8 @@
     flex: 50%;
     background-color: white;
     padding: 20px;
+    left: 850px;
+    top: -40px;
   }
   
   /* Fake image, just for this example */
