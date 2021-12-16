@@ -1,11 +1,6 @@
 * {
 
-<<<<<<< HEAD
   /*  box-sizing: border-box; */
-=======
-    box-sizing: border-box;
-  
->>>>>>> d8a0ba175ca1a17e200093946a417f143d133baf
   }
  /* head{
     width: fit-content;
@@ -14,13 +9,7 @@
   body {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
-<<<<<<< HEAD
  
-=======
-
-  
-
->>>>>>> d8a0ba175ca1a17e200093946a417f143d133baf
   }
   
   
@@ -79,13 +68,8 @@
   .side {
     position: absolute; 
     -ms-flex: 50%; /* IE10 */      
-<<<<<<< HEAD
   /*  flex: 50%; */
     background-color: "white";
-=======
-    flex: 50%;
-    background-color: white;
->>>>>>> d8a0ba175ca1a17e200093946a417f143d133baf
     padding: 20px;
   }
   #sideHeader {
